@@ -7,6 +7,12 @@ use Crm\ApplicationModule\Widget\WidgetManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\IRow;
 
+/**
+ * This component renders button with dropdown listing of gifted subscriptions in listing actions column.
+ * Shows modal with gifted subscription detail after click on listing item.
+ *
+ * @package Crm\ProductsModule\Components
+ */
 class GiftCoupons extends BaseWidget
 {
     private $templateName = 'gift_coupons.latte';
