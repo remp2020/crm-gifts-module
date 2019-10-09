@@ -1,0 +1,22 @@
+services:
+	moduleManager:
+		setup:
+			- addModule(Crm\GiftsModule\GiftsModule())
+
+	- Crm\GiftsModule\Commands\ActivatePurchasedGiftCouponsCommand
+
+	- Crm\GiftsModule\Components\GiftCouponsFactoryInterface
+	- Crm\GiftsModule\Components\DonatedSubscriptionListingWidget
+	- Crm\GiftsModule\Components\GiftPaymentItemsListWidget
+	- Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget
+
+	- Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler
+	- Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler
+	- Crm\GiftsModule\Events\PaymentItemContainerReadyEventHandler
+
+	- Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory
+
+	- Crm\GiftsModule\Repository\PaymentGiftCouponsRepository
+
+	- Crm\GiftsModule\Seeders\AddressTypesSeeder
+	- Crm\GiftsModule\Seeders\ConfigsSeeder
