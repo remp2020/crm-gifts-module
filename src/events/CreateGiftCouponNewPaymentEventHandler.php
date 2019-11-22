@@ -38,14 +38,13 @@ class CreateGiftCouponNewPaymentEventHandler extends AbstractListener
             throw new \Exception('NewPaymentEvent without payment');
         }
 
-        $subscriptionTypeID = $payment->subscription_type_id;
-
-        // remove payment's `subscription_type_id` - we don't want to create subscription for buyer
-        $this->paymentsRepository->update($payment, ['subscription_type_id' => null]);
-
         // create gift coupon entry
         $giftData = $this->paymentMetaRepository->values($payment, 'gift', 'gift_email', 'gift_starts_at')->fetchPairs('key', 'value');
         if (isset($giftData['gift']) && $giftData['gift'] && isset($giftData['gift_email']) && isset($giftData['gift_starts_at'])) {
+            $subscriptionTypeID = $payment->subscription_type_id;
+            // remove payment's `subscription_type_id` - we don't want to create subscription for buyer
+            $this->paymentsRepository->update($payment, ['subscription_type_id' => null]);
+
             $this->paymentGiftCouponsRepository->add(
                 $payment->id,
                 $giftData['gift_email'],
