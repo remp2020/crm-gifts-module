@@ -3,6 +3,7 @@
 namespace Crm\GiftsModule\Forms;
 
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\PaymentsModule\Repository\PaymentMetaRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -18,6 +19,8 @@ use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class GiftSubscriptionAddressFormFactory
 {
+    const PAYMENT_META_KEY = 'gift_subscription_address';
+
     private $usersRepository;
     private $addressesRepository;
     private $countriesRepository;
@@ -37,6 +40,8 @@ class GiftSubscriptionAddressFormFactory
 
     private $paymentsRepository;
 
+    private $paymentMetaRepository;
+
     public function __construct(
         Translator $translator,
         UsersRepository $usersRepository,
@@ -45,7 +50,8 @@ class GiftSubscriptionAddressFormFactory
         CountriesRepository $countriesRepository,
         DataProviderManager $dataProviderManager,
         SubscriptionsRepository $subscriptionsRepository,
-        PaymentsRepository $paymentsRepository
+        PaymentsRepository $paymentsRepository,
+        PaymentMetaRepository $paymentMetaRepository
     ) {
         $this->translator = $translator;
         $this->usersRepository = $usersRepository;
@@ -55,6 +61,7 @@ class GiftSubscriptionAddressFormFactory
         $this->dataProviderManager = $dataProviderManager;
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->paymentsRepository = $paymentsRepository;
+        $this->paymentMetaRepository = $paymentMetaRepository;
     }
 
     public function create(ActiveRow $payment): Form
@@ -104,36 +111,42 @@ class GiftSubscriptionAddressFormFactory
     public function formSucceeded($form, $values)
     {
         $user = $this->payment->user;
-        $address = $this->payment->address;
 
-        if ($address) {
-            $this->addressesRepository->update($address, [
-                'first_name' => $values->first_name,
-                'last_name' => $values->last_name,
-                'number' => $values->number,
-                'city' => $values->city,
-                'zip' => $values->zip,
-                'country_id' => $values->country_id,
-                'phone_number' => $values->phone_number,
-                'address' => $values->address,
-            ]);
-        } else {
-            $address = $this->addressesRepository->add(
+        if (isset($values->first_name)) {
+            // rewrite old address only if it's linked to this payment & type is correct
+            $oldAddress = false;
+            $addressID = $this->paymentMetaRepository->findByPaymentAndKey($this->payment, self::PAYMENT_META_KEY);
+            if ($addressID) {
+                $address = $this->addressesRepository->find($addressID);
+                if ($address && $address->type === AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE) {
+                    $oldAddress = $address;
+                }
+            }
+
+            $changeRequest = $this->addressChangeRequestsRepository->add(
                 $user,
-                AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE,
+                $oldAddress,
                 $values->first_name,
                 $values->last_name,
+                null,
                 $values->address,
                 $values->number,
                 $values->city,
                 $values->zip,
                 $values->country_id,
-                $values->phone_number
+                null,
+                null,
+                null,
+                $values->phone_number,
+                AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE
             );
 
-            $this->paymentsRepository->update($this->payment, [
-                'address_id' => $address->id
-            ]);
+            if ($changeRequest) {
+                $newAddress = $this->addressChangeRequestsRepository->acceptRequest($changeRequest);
+
+                // link to payment for later use (switching user from donor to donee)
+                $this->paymentMetaRepository->add($this->payment, self::PAYMENT_META_KEY, $newAddress->id, true);
+            }
         }
 
         $this->onSave->__invoke($form, $user);

@@ -2,8 +2,10 @@
 
 namespace Crm\GiftsModule\Commands;
 
+use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
+use Crm\PaymentsModule\Repository\PaymentMetaRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Repository\ProductPropertiesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -11,6 +13,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\UsersRepository;
+use Nette\Database\Table\IRow;
 use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,6 +31,8 @@ class ActivatePurchasedGiftCouponsCommand extends Command
 
     private $userManager;
 
+    private $paymentMetaRepository;
+
     private $productPropertiesRepository;
 
     private $subscriptionTypesRepository;
@@ -39,7 +44,8 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         UsersRepository $usersRepository,
         UserManager $userManager,
         ProductPropertiesRepository $productPropertiesRepository,
-        PaymentGiftCouponsRepository $paymentGiftCouponsRepository
+        PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
+        PaymentMetaRepository $paymentMetaRepository
     ) {
         parent::__construct();
         $this->addressesRepository = $addressesRepository;
@@ -49,6 +55,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         $this->userManager = $userManager;
         $this->productPropertiesRepository = $productPropertiesRepository;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
+        $this->paymentMetaRepository = $paymentMetaRepository;
     }
 
     protected function configure()
@@ -116,17 +123,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         list($user, $userCreated) = $this->createUserIfNotExists($coupon->email);
         $output->writeln("User <info>{$coupon->email}</info> - " . ($userCreated ? "created" : "exists"));
 
-        // set address for new subscription in case giver added address for gift (and change owner of ad
-        $address = null;
-        if ($coupon->payment->address) {
-            if ($coupon->payment->address->type === AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE) {
-                $address = $coupon->payment->address;
-                $this->addressesRepository->update($address, [
-                    'user_id' => $user->id,
-                    'type' => 'print',
-                ]);
-            }
-        }
+        $address = $this->changeAddressOwner($user, $coupon->payment);
 
         $subscription = $this->subscriptionsRepository->add(
             $subscriptionType,
@@ -160,5 +157,34 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             $userCreated = true;
         }
         return [$user, $userCreated];
+    }
+
+    private function changeAddressOwner(IRow $user, IRow $payment)
+    {
+        $address = null;
+
+        // check if it's linked directly to payment
+        if ($payment->address && $payment->address->type === AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE) {
+            $address = $payment->address;
+        }
+
+        // or via payment meta
+        $paymentMetaGiftAddress = $this->paymentMetaRepository
+            ->findByPaymentAndKey($payment, GiftSubscriptionAddressFormFactory::PAYMENT_META_KEY);
+        if (isset($paymentMetaGiftAddress->value)) {
+            $giftAddress = $this->addressesRepository->find($paymentMetaGiftAddress->value);
+            if ($giftAddress && $giftAddress->type === AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE) {
+                $address = $giftAddress;
+            }
+        }
+
+        if ($address) {
+            $this->addressesRepository->update($address, [
+                'user_id' => $user->id,
+                'type' => 'print',
+            ]);
+        }
+
+        return $address;
     }
 }
