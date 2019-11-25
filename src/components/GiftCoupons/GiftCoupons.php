@@ -42,7 +42,12 @@ class GiftCoupons extends BaseWidget
         }
 
         foreach ($giftCoupons as $giftCoupon) {
-            $users[$giftCoupon->email] = $this->usersRepository->getByEmail($giftCoupon->email);
+            // optimization to avoid search of user by email unless necessary
+            if ($giftCoupon->subscription_id) {
+                $users[$giftCoupon->email] = $giftCoupon->subscription->user;
+            } else {
+                $users[$giftCoupon->email] = $this->usersRepository->getByEmail($giftCoupon->email);
+            }
         }
 
         $this->template->users = $users;

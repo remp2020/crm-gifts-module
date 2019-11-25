@@ -5,7 +5,7 @@ services:
 
 	- Crm\GiftsModule\Commands\ActivatePurchasedGiftCouponsCommand
 
-	- Crm\GiftsModule\Components\GiftCouponsFactoryInterface
+	- Crm\GiftsModule\Components\GiftCoupons
 	- Crm\GiftsModule\Components\DonatedSubscriptionListingWidget
 	- Crm\GiftsModule\Components\GiftPaymentItemsListWidget
 	- Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget

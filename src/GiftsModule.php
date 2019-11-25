@@ -43,9 +43,9 @@ class GiftsModule extends CrmModule
 
     public function registerWidgets(WidgetManagerInterface $widgetManager)
     {
-        $widgetManager->registerWidgetFactory(
+        $widgetManager->registerWidget(
             'admin.payments.listing.action',
-            $this->getInstance(\Crm\GiftsModule\Components\GiftCouponsFactoryInterface::class),
+            $this->getInstance(\Crm\GiftsModule\Components\GiftCoupons::class),
             400
         );
 
