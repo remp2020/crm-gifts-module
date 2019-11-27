@@ -33,6 +33,11 @@ class GiftsModule extends CrmModule
             $this->getInstance(\Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler::class),
             Emitter::P_HIGH
         );
+
+        $emitter->addListener(
+            \Crm\SubscriptionsModule\Events\SubscriptionStartsEvent::class,
+            $this->getInstance(\Crm\GiftsModule\Events\SubscriptionsStartsEventHandler::class)
+        );
     }
 
     public function registerSeeders(SeederManager $seederManager)

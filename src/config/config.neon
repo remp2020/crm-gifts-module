@@ -13,6 +13,7 @@ services:
 	- Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler
 	- Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler
 	- Crm\GiftsModule\Events\PaymentItemContainerReadyEventHandler
+	- Crm\GiftsModule\Events\SubscriptionsStartsEventHandler
 
 	- Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory
 
