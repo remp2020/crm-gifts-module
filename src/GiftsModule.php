@@ -35,6 +35,11 @@ class GiftsModule extends CrmModule
         );
 
         $emitter->addListener(
+            \Crm\UsersModule\Events\UserCreatedEvent::class,
+            $this->getInstance(\Crm\GiftsModule\Events\SendWelcomeEmailHandler::class)
+        );
+
+        $emitter->addListener(
             \Crm\SubscriptionsModule\Events\SubscriptionStartsEvent::class,
             $this->getInstance(\Crm\GiftsModule\Events\SubscriptionsStartsEventHandler::class)
         );

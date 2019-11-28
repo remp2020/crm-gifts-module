@@ -32,7 +32,6 @@ class SubscriptionsStartsEventHandler extends AbstractListener
             return;
         }
 
-        // TODO: Move emitting of `welcome_email_gift_coupon` NotificationEvent to GiftsModule. See remp/crm#983
         // new users received `welcome_email_gift_coupon` email
         if ($subscription->user->created_at >= DateTime::from('-15 minutes')) {
             return;
