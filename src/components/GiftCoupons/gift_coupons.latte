@@ -42,7 +42,7 @@
                     {/if}<br>
 
                     {if $giftCoupon->status === Crm\GiftsModule\Repository\PaymentGiftCouponsRepository::STATUS_SENT}
-                        <h4>{_gifts.components.gift_coupons.subscription.title}:</h4>
+                        <h4>{_gifts.components.gift_coupons.subscription.header}:</h4>
                         {if $giftCoupon->subscription_id}
                             <strong>{_gifts.components.gift_coupons.subscription.type}: </strong> {$giftCoupon->subscription->type} <br>
                             <strong>{_gifts.components.gift_coupons.subscription.from}: </strong> {$giftCoupon->subscription->start_time|date:"d.m.y H:i"} <br>
