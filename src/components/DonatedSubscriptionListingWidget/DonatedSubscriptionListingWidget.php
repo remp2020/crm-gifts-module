@@ -5,6 +5,12 @@ namespace Crm\GiftsModule\Components;
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Nette\Database\IRow;
 
+/**
+ * This widget fetches payment gift coupons from subscription
+ * and renders simple badge showing subscriptions donor e-mail in listings.
+ *
+ * @package Crm\ProductsModule\Components
+ */
 class DonatedSubscriptionListingWidget extends BaseWidget
 {
     private $templateName = 'donated_subscription_listing_widget.latte';
