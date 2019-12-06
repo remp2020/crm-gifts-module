@@ -42,4 +42,9 @@ class PaymentGiftCouponsRepository extends Repository
     {
         return $this->getTable()->where(['subscription_id' => $subscriptonsIDs])->fetchAll();
     }
+
+    public function findByPayment($payment)
+    {
+        return $this->getTable()->where(['payment_id' => $payment->id]);
+    }
 }
