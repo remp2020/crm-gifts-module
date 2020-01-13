@@ -38,6 +38,7 @@ class SubscriptionsStartsEventHandler extends AbstractListener
         }
 
         $this->emitter->emit(new NotificationEvent(
+            $this->emitter,
             $subscription->user,
             'new_subscription_gift',
             [],

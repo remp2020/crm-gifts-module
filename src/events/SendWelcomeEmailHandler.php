@@ -34,6 +34,7 @@ class SendWelcomeEmailHandler extends AbstractListener
         }
 
         $this->emitter->emit(new NotificationEvent(
+            $this->emitter,
             $user,
             'welcome_email_gift_coupon',
             [

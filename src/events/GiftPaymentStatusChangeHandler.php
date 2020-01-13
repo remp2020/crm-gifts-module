@@ -72,6 +72,7 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
             }
 
             $this->emitter->emit(new NotificationEvent(
+                $this->emitter,
                 $payment->user,
                 'created_payment_gift_coupon',
                 ['variable_symbol' => $payment->variable_symbol],
