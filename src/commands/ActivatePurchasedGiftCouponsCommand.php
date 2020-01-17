@@ -91,7 +91,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
     private function processCoupon($coupon, OutputInterface $output)
     {
         if ($coupon->payment->status !== PaymentsRepository::STATUS_PAID) {
-            return;
+            return 0;
         }
 
         $output->writeln("Processing gift for email <info>{$coupon->email}</info>");
@@ -100,24 +100,24 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             $subscriptionTypeCode = $this->productPropertiesRepository->getPropertyByCode($coupon->product, 'subscription_type_code');
             if (!$subscriptionTypeCode) {
                 $output->writeln("<error>Missing assigned 'Subscription type code' for product {$coupon->product->name}</error>");
-                return;
+                return 1;
             }
 
             $subscriptionType = $this->subscriptionTypesRepository->findByCode($subscriptionTypeCode);
 
             if (!$subscriptionType) {
                 $output->writeln("<error>No subscription assigned for code <info>{$subscriptionTypeCode}</info></error>");
-                return;
+                return 1;
             }
         } elseif ($coupon->subscription_type_id) {
             $subscriptionType = $this->subscriptionTypesRepository->find($coupon->subscription_type_id);
             if (!$subscriptionType) {
                 $output->writeln("<error>Unable to find subscription type with ID <info>{$coupon->subscription_type_id}</info></error>");
-                return;
+                return 1;
             }
         } else {
             $output->writeln("<error>Coupon with ID <info>{$coupon->id}</info> is missing `product_id` and `subscription_type_id`</error>");
-            return;
+            return 1;
         }
 
         list($user, $userCreated) = $this->createUserIfNotExists($coupon->email);
@@ -138,7 +138,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
 
         if (!$subscription) {
             $output->writeln("<error>Error while creating subscription {$subscriptionType->name}</error>");
-            return;
+            return 1;
         }
         $this->paymentGiftCouponsRepository->update($coupon, [
             'status' => PaymentGiftCouponsRepository::STATUS_SENT,
@@ -146,6 +146,8 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             'subscription_id' => $subscription->id
         ]);
         $output->writeln("Subscription <info>{$subscriptionType->name}</info> - created\n");
+
+        return 0;
     }
 
     private function createUserIfNotExists($email)
