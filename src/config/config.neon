@@ -3,6 +3,8 @@ services:
 		setup:
 			- addModule(Crm\GiftsModule\GiftsModule())
 
+	paymentGiftCouponsRepository: Crm\GiftsModule\Repository\PaymentGiftCouponsRepository
+
 	- Crm\GiftsModule\Commands\ActivatePurchasedGiftCouponsCommand
 
 	- Crm\GiftsModule\Components\GiftCoupons
@@ -17,8 +19,6 @@ services:
 	- Crm\GiftsModule\Events\SubscriptionsStartsEventHandler
 
 	- Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory
-
-	- Crm\GiftsModule\Repository\PaymentGiftCouponsRepository
 
 	- Crm\GiftsModule\Seeders\AddressTypesSeeder
 	- Crm\GiftsModule\Seeders\ConfigsSeeder
