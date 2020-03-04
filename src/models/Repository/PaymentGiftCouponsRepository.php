@@ -14,7 +14,7 @@ class PaymentGiftCouponsRepository extends Repository
 
     protected $tableName = 'payment_gift_coupons';
 
-    public function add(
+    final public function add(
         int $paymentID,
         string $email,
         DateTime $startsAt,
@@ -31,19 +31,19 @@ class PaymentGiftCouponsRepository extends Repository
         ]);
     }
 
-    public function getAllNotSentAndActive()
+    final public function getAllNotSentAndActive()
     {
         return $this->getTable()
             ->where(['status' => self::STATUS_NOT_SENT])
             ->where('starts_at <= ?', new DateTime());
     }
 
-    public function findAllBySubscriptions(array $subscriptonsIDs)
+    final public function findAllBySubscriptions(array $subscriptonsIDs)
     {
         return $this->getTable()->where(['subscription_id' => $subscriptonsIDs])->fetchAll();
     }
 
-    public function findByPayment($payment)
+    final public function findByPayment($payment)
     {
         return $this->getTable()->where(['payment_id' => $payment->id]);
     }
