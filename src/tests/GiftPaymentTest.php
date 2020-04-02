@@ -3,8 +3,6 @@
 namespace Crm\GiftsModule\Tests;
 
 use Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler;
-use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
-use Crm\PaymentsModule\Events\PaymentStatusChangeHandler;
 use Crm\PaymentsModule\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repository\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
