@@ -3,6 +3,7 @@
 namespace Crm\GiftsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
+use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
 
 class PaymentGiftCouponsRepository extends Repository
@@ -43,7 +44,7 @@ class PaymentGiftCouponsRepository extends Repository
         return $this->getTable()->where(['subscription_id' => $subscriptonsIDs])->fetchAll();
     }
 
-    final public function findByPayment($payment)
+    final public function findByPayment($payment): Selection
     {
         return $this->getTable()->where(['payment_id' => $payment->id]);
     }
