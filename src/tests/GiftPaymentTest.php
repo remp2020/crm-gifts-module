@@ -53,7 +53,7 @@ class GiftPaymentTest extends BaseTestCase
             ->setLength(365)
             ->save();
 
-        $payment = $this->addGiftPayment($user, $subscriptionType, 'friend@example.com', new DateTime());
+        $payment = $this->addGiftPayment($user, $subscriptionType, 'friend@example.com', new DateTime('2040-01-01 00:00:00'));
 
         $notifications = $this->notificationsSentTo('test@example.com');
         $this->assertCount(1, $notifications);
