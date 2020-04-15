@@ -26,7 +26,7 @@
                 <p>
                     <strong>{_gifts.components.gift_coupons.email}:</strong>
                     {if $user = $users[$giftCoupon->email]}
-                        <a href="{plink :Users:UsersAdmin:show $user->id}" target="_blank">{$user->email}</a>
+                        <a href="{plink :Users:UsersAdmin:show $user->id}" target="_blank">{$user->public_name}</a>
                     {else}
                         {$giftCoupon->email}
                     {/if}<br>
