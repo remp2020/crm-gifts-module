@@ -128,6 +128,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         $subscription = $this->subscriptionsRepository->add(
             $subscriptionType,
             false,
+            true,
             $user,
             SubscriptionsRepository::TYPE_GIFT,
             new DateTime(),
