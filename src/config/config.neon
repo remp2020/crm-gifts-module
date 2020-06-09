@@ -22,3 +22,5 @@ services:
 
 	- Crm\GiftsModule\Seeders\AddressTypesSeeder
 	- Crm\GiftsModule\Seeders\ConfigsSeeder
+
+	canDeleteAddressDataProvider: Crm\GiftsModule\DataProvider\CanDeleteAddressDataProvider

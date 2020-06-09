@@ -53,3 +53,7 @@ gift_payment_item:
 seeders:
 	address_types:
 		gift_subscription_type: Dárkové předplatné
+
+admin:
+    address:
+        cant_delete: 'Tato adresa se používá pro darované předplatné'

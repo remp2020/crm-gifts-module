@@ -3,8 +3,10 @@ namespace Crm\GiftsModule;
 
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
 use Crm\ApplicationModule\CrmModule;
+use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\SeederManager;
 use Crm\ApplicationModule\Widget\WidgetManagerInterface;
+use Crm\GiftsModule\DataProvider\CanDeleteAddressDataProvider;
 use League\Event\Emitter;
 
 class GiftsModule extends CrmModule
@@ -72,6 +74,15 @@ class GiftsModule extends CrmModule
         $widgetManager->registerWidget(
             'subscriptions.admin.user_subscriptions_listing.subscription',
             $this->getInstance(\Crm\GiftsModule\Components\DonatedSubscriptionListingWidget::class)
+        );
+    }
+
+    public function registerDataProviders(DataProviderManager $dataProviderManager)
+    {
+        $dataProviderManager->registerDataProvider(
+            'users.dataprovider.address.can_delete',
+            $this->getInstance(CanDeleteAddressDataProvider::class),
+            200
         );
     }
 }

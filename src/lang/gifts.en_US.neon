@@ -53,3 +53,7 @@ gift_payment_item:
 seeders:
 	address_types:
 		gift_subscription_type: Gift subscription
+
+admin:
+    address:
+        cant_delete: 'This address is used in gift subscription.'
