@@ -42,7 +42,7 @@ class SubscriptionsStartsEventHandler extends AbstractListener
             $subscription->user,
             'new_subscription_gift',
             [],
-            "subscription.{$subscription->id}"
+            "new_subscription.{$subscription->id}"
         ));
     }
 }
