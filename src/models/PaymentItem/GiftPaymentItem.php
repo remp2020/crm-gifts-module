@@ -53,4 +53,9 @@ class GiftPaymentItem implements PaymentItemInterface
             'subscription_type_id' => $this->subscriptionTypeID,
         ];
     }
+
+    public function meta(): array
+    {
+        return [];
+    }
 }
