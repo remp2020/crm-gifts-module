@@ -7,6 +7,7 @@ use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\ProductPropertiesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
@@ -37,6 +38,8 @@ class ActivatePurchasedGiftCouponsCommand extends Command
 
     private $subscriptionTypesRepository;
 
+    private $ordersRepository;
+
     public function __construct(
         AddressesRepository $addressesRepository,
         SubscriptionsRepository $subscriptionsRepository,
@@ -45,7 +48,8 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         UserManager $userManager,
         ProductPropertiesRepository $productPropertiesRepository,
         PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
-        PaymentMetaRepository $paymentMetaRepository
+        PaymentMetaRepository $paymentMetaRepository,
+        OrdersRepository $ordersRepository
     ) {
         parent::__construct();
         $this->addressesRepository = $addressesRepository;
@@ -56,6 +60,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         $this->productPropertiesRepository = $productPropertiesRepository;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->paymentMetaRepository = $paymentMetaRepository;
+        $this->ordersRepository = $ordersRepository;
     }
 
     protected function configure()
@@ -146,6 +151,13 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             'sent_at' => new DateTime(),
             'subscription_id' => $subscription->id
         ]);
+
+        // update status of order to delivered (if this gift was purchased in shop)
+        $order = $this->ordersRepository->findByPayment($coupon->payment);
+        if ($order) {
+            $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_DELIVERED]);
+        }
+
         $output->writeln("Subscription <info>{$subscriptionType->name}</info> - created\n");
 
         return 0;
