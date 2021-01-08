@@ -12,6 +12,7 @@ use Crm\ProductsModule\Repository\ProductPropertiesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\UsersModule\Auth\UserManager;
+use Crm\UsersModule\Repository\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\IRow;
@@ -23,6 +24,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ActivatePurchasedGiftCouponsCommand extends Command
 {
     private $addressesRepository;
+
+    private $addressChangeRequestsRepository;
 
     private $subscriptionsRepository;
 
@@ -42,6 +45,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
 
     public function __construct(
         AddressesRepository $addressesRepository,
+        AddressChangeRequestsRepository $addressChangeRequestsRepository,
         SubscriptionsRepository $subscriptionsRepository,
         SubscriptionTypesRepository $subscriptionTypesRepository,
         UsersRepository $usersRepository,
@@ -53,6 +57,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
     ) {
         parent::__construct();
         $this->addressesRepository = $addressesRepository;
+        $this->addressChangeRequestsRepository = $addressChangeRequestsRepository;
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->usersRepository = $usersRepository;
         $this->paymentGiftCouponsRepository = $paymentGiftCouponsRepository;
@@ -198,6 +203,16 @@ class ActivatePurchasedGiftCouponsCommand extends Command
                 'user_id' => $user->id,
                 'type' => 'print',
             ]);
+
+            $changeRequests = $this->addressChangeRequestsRepository->getTable()
+                ->where('address_id = ?', $address->id);
+
+            foreach ($changeRequests as $changeRequest) {
+                $this->addressChangeRequestsRepository->update($changeRequest, [
+                    'user_id' => $user->id,
+                    'type' => 'print',
+                ]);
+            }
         }
 
         return $address;
