@@ -48,6 +48,8 @@ class GiftPaymentTest extends BaseTestCase
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         $this->emitter->removeAllListeners(GiftPaymentStatusChangeHandler::class);
     }
 
