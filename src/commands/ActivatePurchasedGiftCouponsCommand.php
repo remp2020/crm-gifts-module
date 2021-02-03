@@ -6,7 +6,6 @@ use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\ProductPropertiesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -20,6 +19,8 @@ use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Tracy\Debugger;
+use Tracy\ILogger;
 
 class ActivatePurchasedGiftCouponsCommand extends Command
 {
@@ -100,32 +101,31 @@ class ActivatePurchasedGiftCouponsCommand extends Command
 
     private function processCoupon($coupon, OutputInterface $output)
     {
-        if ($coupon->payment->status !== PaymentsRepository::STATUS_PAID) {
-            return 0;
-        }
-
         $output->writeln("Processing gift for email <info>{$coupon->email}</info>");
 
         if ($coupon->product_id) {
             $subscriptionTypeCode = $this->productPropertiesRepository->getPropertyByCode($coupon->product, 'subscription_type_code');
             if (!$subscriptionTypeCode) {
+                Debugger::log("Missing assigned 'Subscription type code' for product {$coupon->product->name}", ILogger::ERROR);
                 $output->writeln("<error>Missing assigned 'Subscription type code' for product {$coupon->product->name}</error>");
                 return 1;
             }
 
             $subscriptionType = $this->subscriptionTypesRepository->findByCode($subscriptionTypeCode);
-
             if (!$subscriptionType) {
+                Debugger::log("No subscription assigned for code {$subscriptionTypeCode}", ILogger::ERROR);
                 $output->writeln("<error>No subscription assigned for code <info>{$subscriptionTypeCode}</info></error>");
                 return 1;
             }
         } elseif ($coupon->subscription_type_id) {
             $subscriptionType = $this->subscriptionTypesRepository->find($coupon->subscription_type_id);
             if (!$subscriptionType) {
+                Debugger::log("Unable to find subscription type with ID {$coupon->subscription_type_id}", ILogger::ERROR);
                 $output->writeln("<error>Unable to find subscription type with ID <info>{$coupon->subscription_type_id}</info></error>");
                 return 1;
             }
         } else {
+            Debugger::log("Coupon with ID {$coupon->id} is missing `product_id` and `subscription_type_id`", ILogger::ERROR);
             $output->writeln("<error>Coupon with ID <info>{$coupon->id}</info> is missing `product_id` and `subscription_type_id`</error>");
             return 1;
         }
@@ -148,7 +148,8 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         );
 
         if (!$subscription) {
-            $output->writeln("<error>Error while creating subscription {$subscriptionType->name}</error>");
+            Debugger::log("Error while creating gift subscription {$subscriptionType->name}", ILogger::ERROR);
+            $output->writeln("<error>Error while creating gift subscription {$subscriptionType->name}</error>");
             return 1;
         }
         $this->paymentGiftCouponsRepository->update($coupon, [

@@ -4,6 +4,7 @@ namespace Crm\GiftsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Nette\Caching\IStorage;
 use Nette\Database\Context;
 use Nette\Database\Table\Selection;
@@ -47,8 +48,9 @@ class PaymentGiftCouponsRepository extends Repository
     final public function getAllNotSentAndActive()
     {
         return $this->getTable()
-            ->where(['status' => self::STATUS_NOT_SENT])
-            ->where('starts_at <= ?', new DateTime());
+            ->where(['payment_gift_coupons.status' => self::STATUS_NOT_SENT])
+            ->where('starts_at <= ?', new DateTime())
+            ->where('payment.status IN ?', [PaymentsRepository::STATUS_PAID, PaymentsRepository::STATUS_PREPAID]);
     }
 
     final public function findAllBySubscriptions(array $subscriptonsIDs)
