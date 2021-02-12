@@ -57,3 +57,8 @@ seeders:
 admin:
     address:
         cant_delete: 'Tato adresa se používá pro darované předplatné'
+
+data_provider:
+	payment_item_types_filter:
+		key:
+			gift: Dar

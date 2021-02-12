@@ -24,3 +24,4 @@ services:
 	- Crm\GiftsModule\Seeders\ConfigsSeeder
 
 	canDeleteAddressDataProvider: Crm\GiftsModule\DataProvider\CanDeleteAddressDataProvider
+	- Crm\GiftsModule\DataProvider\PaymentItemTypesFilterDataProvider
