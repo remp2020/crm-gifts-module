@@ -133,7 +133,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         list($user, $userCreated) = $this->createUserIfNotExists($coupon->email);
         $output->writeln("User <info>{$coupon->email}</info> - " . ($userCreated ? "created" : "exists"));
 
-        $address = $this->changeAddressOwner($user, $coupon->payment);
+        $address = $this->changeAddressOwner($user, $coupon);
 
         $subscription = $this->subscriptionsRepository->add(
             $subscriptionType,
@@ -180,22 +180,26 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         return [$user, $userCreated];
     }
 
-    private function changeAddressOwner(IRow $user, IRow $payment)
+    private function changeAddressOwner(IRow $user, IRow $coupon)
     {
-        $address = null;
+        $payment = $coupon->payment;
+        $address = $coupon->address;
 
-        // check if it's linked directly to payment
-        if ($payment->address && $payment->address->type === AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE) {
-            $address = $payment->address;
-        }
+        // if there is no address in coupon
+        if (is_null($address)) {
+            // check if it's linked directly to payment
+            if ($payment->address && $payment->address->type === AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE) {
+                $address = $payment->address;
+            }
 
-        // or via payment meta
-        $paymentMetaGiftAddress = $this->paymentMetaRepository
-            ->findByPaymentAndKey($payment, GiftSubscriptionAddressFormFactory::PAYMENT_META_KEY);
-        if (isset($paymentMetaGiftAddress->value)) {
-            $giftAddress = $this->addressesRepository->find($paymentMetaGiftAddress->value);
-            if ($giftAddress && $giftAddress->type === AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE) {
-                $address = $giftAddress;
+            // or via payment meta
+            $paymentMetaGiftAddress = $this->paymentMetaRepository
+                ->findByPaymentAndKey($payment, GiftSubscriptionAddressFormFactory::PAYMENT_META_KEY);
+            if (isset($paymentMetaGiftAddress->value)) {
+                $giftAddress = $this->addressesRepository->find($paymentMetaGiftAddress->value);
+                if ($giftAddress && $giftAddress->type === AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE) {
+                    $address = $giftAddress;
+                }
             }
         }
 

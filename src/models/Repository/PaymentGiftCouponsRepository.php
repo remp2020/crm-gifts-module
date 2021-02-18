@@ -33,7 +33,8 @@ class PaymentGiftCouponsRepository extends Repository
         string $email,
         DateTime $startsAt,
         ?int $productID = null,
-        ?int $subscriptionTypeID = null
+        ?int $subscriptionTypeID = null,
+        ?int $addressID = null
     ) {
         return $this->insert([
             'payment_id' => $paymentID,
@@ -41,7 +42,8 @@ class PaymentGiftCouponsRepository extends Repository
             'subscription_type_id' => $subscriptionTypeID,
             'email' => $email,
             'starts_at' => $startsAt,
-            'status' => self::STATUS_NOT_SENT
+            'status' => self::STATUS_NOT_SENT,
+            'address_id' => $addressID
         ]);
     }
 
