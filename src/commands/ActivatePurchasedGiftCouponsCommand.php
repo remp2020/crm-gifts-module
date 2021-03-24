@@ -97,6 +97,8 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         $output->writeln('');
         $output->writeln('<info>All done. Took ' . round($duration, 2) . ' sec.</info>');
         $output->writeln('');
+
+        return Command::SUCCESS;
     }
 
     private function processCoupon($coupon, OutputInterface $output)
@@ -108,26 +110,26 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             if (!$subscriptionTypeCode) {
                 Debugger::log("Missing assigned 'Subscription type code' for product {$coupon->product->name}", ILogger::ERROR);
                 $output->writeln("<error>Missing assigned 'Subscription type code' for product {$coupon->product->name}</error>");
-                return 1;
+                return;
             }
 
             $subscriptionType = $this->subscriptionTypesRepository->findByCode($subscriptionTypeCode);
             if (!$subscriptionType) {
                 Debugger::log("No subscription assigned for code {$subscriptionTypeCode}", ILogger::ERROR);
                 $output->writeln("<error>No subscription assigned for code <info>{$subscriptionTypeCode}</info></error>");
-                return 1;
+                return;
             }
         } elseif ($coupon->subscription_type_id) {
             $subscriptionType = $this->subscriptionTypesRepository->find($coupon->subscription_type_id);
             if (!$subscriptionType) {
                 Debugger::log("Unable to find subscription type with ID {$coupon->subscription_type_id}", ILogger::ERROR);
                 $output->writeln("<error>Unable to find subscription type with ID <info>{$coupon->subscription_type_id}</info></error>");
-                return 1;
+                return;
             }
         } else {
             Debugger::log("Coupon with ID {$coupon->id} is missing `product_id` and `subscription_type_id`", ILogger::ERROR);
             $output->writeln("<error>Coupon with ID <info>{$coupon->id}</info> is missing `product_id` and `subscription_type_id`</error>");
-            return 1;
+            return;
         }
 
         list($user, $userCreated) = $this->createUserIfNotExists($coupon->email);
@@ -150,7 +152,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         if (!$subscription) {
             Debugger::log("Error while creating gift subscription {$subscriptionType->name}", ILogger::ERROR);
             $output->writeln("<error>Error while creating gift subscription {$subscriptionType->name}</error>");
-            return 1;
+            return;
         }
         $this->paymentGiftCouponsRepository->update($coupon, [
             'status' => PaymentGiftCouponsRepository::STATUS_SENT,
@@ -166,7 +168,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
 
         $output->writeln("Subscription <info>{$subscriptionType->name}</info> - created\n");
 
-        return 0;
+        return;
     }
 
     private function createUserIfNotExists($email)
