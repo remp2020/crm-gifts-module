@@ -6,7 +6,7 @@ services:
 	paymentGiftCouponsRepository: Crm\GiftsModule\Repository\PaymentGiftCouponsRepository
 
 	activatePurchasedGiftCouponsCommand:
-		class: Crm\GiftsModule\Commands\ActivatePurchasedGiftCouponsCommand
+		factory: Crm\GiftsModule\Commands\ActivatePurchasedGiftCouponsCommand
 
 	- Crm\GiftsModule\Components\GiftCoupons
 	- Crm\GiftsModule\Components\DonatedSubscriptionListingWidget
