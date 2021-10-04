@@ -69,6 +69,12 @@ php bin/command.php application:seed
       - If account with `gift_email` exists, it is used for gift.
       - Otherwise new account is created with `user.source = PaymentGiftCouponsRepository::USER_SOURCE_GIFT_COUPON`.
    - New subscription is attached to donee's account with `subscription.type = SubscriptionsRepository::TYPE_GIFT`.
+   - You can configure subscription extension method by calling `setExtendMethod` in your configuration file like this:
+	```neon
+	activatePurchasedGiftCouponsCommand:
+		setup:
+			- setExtendMethod('extend_same_content_access')
+	```
 
 5. `SendWelcomeEmailHandler` listens to `UserCreatedEvent`.
    - If created user has `source === PaymentGiftCouponsRepository::USER_SOURCE_GIFT_COUPON`, `NotificationEvent(welcome_email_gift_coupon)` is emitted.

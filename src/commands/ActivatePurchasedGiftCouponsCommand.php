@@ -8,6 +8,8 @@ use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
 use Crm\ProductsModule\Repository\OrdersRepository;
 use Crm\ProductsModule\Repository\ProductPropertiesRepository;
+use Crm\SubscriptionsModule\Extension\ExtensionInterface;
+use Crm\SubscriptionsModule\Extension\ExtensionMethodFactory;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\UsersModule\Auth\UserManager;
@@ -44,6 +46,11 @@ class ActivatePurchasedGiftCouponsCommand extends Command
 
     private $ordersRepository;
 
+    /** @var ExtensionInterface */
+    private $extender;
+
+    private $extensionMethodFactory;
+
     public function __construct(
         AddressesRepository $addressesRepository,
         AddressChangeRequestsRepository $addressChangeRequestsRepository,
@@ -54,7 +61,8 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         ProductPropertiesRepository $productPropertiesRepository,
         PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
         PaymentMetaRepository $paymentMetaRepository,
-        OrdersRepository $ordersRepository
+        OrdersRepository $ordersRepository,
+        ExtensionMethodFactory $extensionMethodFactory
     ) {
         parent::__construct();
         $this->addressesRepository = $addressesRepository;
@@ -67,6 +75,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->paymentMetaRepository = $paymentMetaRepository;
         $this->ordersRepository = $ordersRepository;
+        $this->extensionMethodFactory = $extensionMethodFactory;
     }
 
     protected function configure()
@@ -77,6 +86,11 @@ class ActivatePurchasedGiftCouponsCommand extends Command
                 'products:activate_purchased_gift_coupons'
                 ])
             ->setDescription('Activates all gift coupons (and creates accounts) purchased via shop');
+    }
+
+    public function setExtendMethod(string $extendMethod)
+    {
+        $this->extender = $this->extensionMethodFactory->getExtension($extendMethod);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -137,13 +151,18 @@ class ActivatePurchasedGiftCouponsCommand extends Command
 
         $address = $this->changeAddressOwner($user, $coupon);
 
+        $startTime = new DateTime();
+        if ($this->extender) {
+            $startTime = $this->extender->getStartTime($user, $subscriptionType)->getDate();
+        }
+
         $subscription = $this->subscriptionsRepository->add(
             $subscriptionType,
             false,
             true,
             $user,
             SubscriptionsRepository::TYPE_GIFT,
-            new DateTime(),
+            $startTime,
             null,
             null,
             $address
