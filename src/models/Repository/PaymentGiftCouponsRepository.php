@@ -5,7 +5,7 @@ namespace Crm\GiftsModule\Repository;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
-use Nette\Caching\IStorage;
+use Nette\Caching\Storage;
 use Nette\Database\Context;
 use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
@@ -21,7 +21,7 @@ class PaymentGiftCouponsRepository extends Repository
 
     public function __construct(
         Context $database,
-        IStorage $cacheStorage = null,
+        Storage $cacheStorage = null,
         AuditLogRepository $auditLogRepository
     ) {
         parent::__construct($database, $cacheStorage);
