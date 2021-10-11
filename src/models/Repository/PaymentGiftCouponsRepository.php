@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Nette\Caching\Storage;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
 
@@ -20,7 +20,7 @@ class PaymentGiftCouponsRepository extends Repository
     protected $tableName = 'payment_gift_coupons';
 
     public function __construct(
-        Context $database,
+        Explorer $database,
         Storage $cacheStorage = null,
         AuditLogRepository $auditLogRepository
     ) {
