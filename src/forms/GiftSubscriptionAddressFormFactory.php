@@ -3,9 +3,9 @@
 namespace Crm\GiftsModule\Forms;
 
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
-use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Repository\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
