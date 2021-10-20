@@ -9,7 +9,7 @@ use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Multiplier;
-use Nette\Database\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Localization\ITranslator;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
@@ -58,7 +58,7 @@ class GiftCoupons extends BaseWidget
         return 'couponmodal';
     }
 
-    public function render(IRow $payment)
+    public function render(ActiveRow $payment)
     {
         $giftCoupons = $payment->related('payment_gift_coupons')->fetchAll();
         $users = [];

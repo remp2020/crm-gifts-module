@@ -6,7 +6,7 @@ use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
 use Crm\UsersModule\DataProvider\CanDeleteAddressDataProviderInterface;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Localization\ITranslator;
 
 class CanDeleteAddressDataProvider implements CanDeleteAddressDataProviderInterface
@@ -29,7 +29,7 @@ class CanDeleteAddressDataProvider implements CanDeleteAddressDataProviderInterf
             throw new DataProviderException('address param missing');
         }
 
-        /** @var IRow $address */
+        /** @var ActiveRow $address */
         $address = $params['address'];
 
         $paymentsMeta = $this->paymentMetaRepository->findByMeta(GiftSubscriptionAddressFormFactory::PAYMENT_META_KEY, $address->id);

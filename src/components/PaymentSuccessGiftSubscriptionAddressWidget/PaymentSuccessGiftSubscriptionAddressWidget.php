@@ -10,7 +10,6 @@ use Crm\PaymentsModule\Presenters\BankTransferPresenter;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\SalesFunnelModule\Presenters\SalesFunnelPresenter;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 
 class PaymentSuccessGiftSubscriptionAddressWidget extends BaseWidget
 {
@@ -59,7 +58,7 @@ class PaymentSuccessGiftSubscriptionAddressWidget extends BaseWidget
         return $form;
     }
 
-    public function isGiftSubscriptionAddressRequired(IRow $payment): bool
+    public function isGiftSubscriptionAddressRequired(ActiveRow $payment): bool
     {
         // check if subscription is print & gift is enabled (gift = 1)
         $giftPayment = $payment->related('payment_meta')

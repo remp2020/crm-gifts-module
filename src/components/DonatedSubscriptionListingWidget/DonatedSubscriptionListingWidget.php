@@ -3,7 +3,7 @@
 namespace Crm\GiftsModule\Components;
 
 use Crm\ApplicationModule\Widget\BaseWidget;
-use Nette\Database\IRow;
+use Nette\Database\Table\ActiveRow;
 
 /**
  * This widget fetches payment gift coupons from subscription
@@ -20,7 +20,7 @@ class DonatedSubscriptionListingWidget extends BaseWidget
         return 'donatedsubscriptionwidget';
     }
 
-    public function render(IRow $subscription)
+    public function render(ActiveRow $subscription)
     {
         $giftCoupon = $subscription->related('payment_gift_coupons')->fetch();
         if (!$giftCoupon) {

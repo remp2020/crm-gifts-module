@@ -16,7 +16,7 @@ use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\UsersRepository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -208,7 +208,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         return [$user, $userCreated];
     }
 
-    private function changeAddressOwner(IRow $user, IRow $coupon)
+    private function changeAddressOwner(ActiveRow $user, ActiveRow $coupon)
     {
         $payment = $coupon->payment;
         $address = $coupon->address;

@@ -4,7 +4,7 @@ namespace Crm\GiftsModule\PaymentItem;
 
 use Crm\PaymentsModule\PaymentItem\PaymentItemInterface;
 use Crm\PaymentsModule\PaymentItem\PaymentItemTrait;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class GiftPaymentItem implements PaymentItemInterface
 {
@@ -29,11 +29,11 @@ class GiftPaymentItem implements PaymentItemInterface
     }
 
     /**
-     * @param IRow $paymentItem
+     * @param ActiveRow $paymentItem
      * @return GiftPaymentItem
      * @throws \Exception Thrown if payment item isn't `gift` payment item type.
      */
-    public static function fromPaymentItem(IRow $paymentItem)
+    public static function fromPaymentItem(ActiveRow $paymentItem)
     {
         if ($paymentItem->type != self::TYPE) {
             throw new \Exception("Can not load GiftPaymentItem from payment item of different type. Got [{$paymentItem->type}]");
