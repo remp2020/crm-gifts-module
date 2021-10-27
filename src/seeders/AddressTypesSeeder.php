@@ -4,7 +4,7 @@ namespace Crm\GiftsModule\Seeders;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
 use Crm\UsersModule\Repository\AddressTypesRepository;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class AddressTypesSeeder implements ISeeder
@@ -17,7 +17,7 @@ class AddressTypesSeeder implements ISeeder
 
     public function __construct(
         AddressTypesRepository $addressTypesRepository,
-        ITranslator $translator
+        Translator $translator
     ) {
         $this->addressTypesRepository = $addressTypesRepository;
         $this->translator = $translator;

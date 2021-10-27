@@ -5,7 +5,7 @@ namespace Crm\GiftsModule\DataProvider;
 use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\GiftsModule\PaymentItem\GiftPaymentItem;
 use Crm\PaymentsModule\DataProvider\PaymentItemTypesFilterDataProviderInterface;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 class PaymentItemTypesFilterDataProvider implements PaymentItemTypesFilterDataProviderInterface
 {
@@ -14,7 +14,7 @@ class PaymentItemTypesFilterDataProvider implements PaymentItemTypesFilterDataPr
     private $translator;
 
     public function __construct(
-        ITranslator $translator
+        Translator $translator
     ) {
         $this->translator = $translator;
     }

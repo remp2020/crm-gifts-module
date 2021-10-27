@@ -10,7 +10,7 @@ use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Multiplier;
 use Nette\Database\Table\ActiveRow;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 use Tracy\Debugger;
@@ -37,7 +37,7 @@ class GiftCoupons extends BaseWidget
         WidgetManager $widgetManager,
         PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
         UsersRepository $usersRepository,
-        ITranslator $translator,
+        Translator $translator,
         UserDateHelper $userDateHelper
     ) {
         parent::__construct($widgetManager);

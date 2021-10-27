@@ -7,7 +7,7 @@ use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
 use Crm\UsersModule\DataProvider\CanDeleteAddressDataProviderInterface;
 use Nette\Database\Table\ActiveRow;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 class CanDeleteAddressDataProvider implements CanDeleteAddressDataProviderInterface
 {
@@ -16,7 +16,7 @@ class CanDeleteAddressDataProvider implements CanDeleteAddressDataProviderInterf
     private $paymentMetaRepository;
 
     public function __construct(
-        ITranslator $translator,
+        Translator $translator,
         PaymentMetaRepository $paymentMetaRepository
     ) {
         $this->translator = $translator;

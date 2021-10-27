@@ -7,14 +7,14 @@ use Crm\SalesFunnelModule\Events\PaymentItemContainerReadyEvent;
 use Crm\SubscriptionsModule\PaymentItem\SubscriptionTypePaymentItem;
 use League\Event\AbstractListener;
 use League\Event\EventInterface;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 class PaymentItemContainerReadyEventHandler extends AbstractListener
 {
     private $translator;
 
     public function __construct(
-        ITranslator $translator
+        Translator $translator
     ) {
         $this->translator = $translator;
     }
