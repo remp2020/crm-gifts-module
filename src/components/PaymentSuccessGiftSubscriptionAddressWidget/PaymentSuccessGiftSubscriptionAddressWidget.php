@@ -5,8 +5,11 @@ namespace Crm\GiftsModule\Components;
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\PaymentItem\GiftPaymentItem;
+use Crm\PaymentsModule\Gateways\BankTransfer;
+use Crm\PaymentsModule\Presenters\BankTransferPresenter;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\SalesFunnelModule\Presenters\SalesFunnelPresenter;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\IRow;
 
 class PaymentSuccessGiftSubscriptionAddressWidget extends BaseWidget
@@ -23,10 +26,11 @@ class PaymentSuccessGiftSubscriptionAddressWidget extends BaseWidget
      */
     public function render()
     {
-        $payment = $this->presenter()->getPayment();
-        if ($payment->status !== PaymentsRepository::STATUS_PAID) {
+        $payment = $this->getPayment();
+        if ($payment->status !== PaymentsRepository::STATUS_PAID && $payment->payment_gateway->code !== BankTransfer::GATEWAY_CODE) {
             return;
         }
+
         if (!$this->isGiftSubscriptionAddressRequired($payment)) {
             return;
         }
@@ -43,7 +47,7 @@ class PaymentSuccessGiftSubscriptionAddressWidget extends BaseWidget
      */
     public function createComponentGiftSubscriptionAddressForm(GiftSubscriptionAddressFormFactory $factory)
     {
-        $payment = $this->presenter()->getPayment();
+        $payment = $this->getPayment();
 
         $form = $factory->create($payment);
         $factory->onSave = function ($form, $user) {
@@ -84,16 +88,13 @@ class PaymentSuccessGiftSubscriptionAddressWidget extends BaseWidget
         return false;
     }
 
-    /**
-     * @return SalesFunnelPresenter
-     * @throws \Exception
-     */
-    public function presenter(): SalesFunnelPresenter
+    public function getPayment(): ActiveRow
     {
         $presenter = $this->getPresenter();
-        if (!$presenter instanceof SalesFunnelPresenter) {
-            throw new \Exception('PaymentSuccessGiftSubscriptionAddressWidget used within not allowed presenter: ' . get_class($presenter));
+        if ($presenter instanceof SalesFunnelPresenter || $presenter instanceof BankTransferPresenter) {
+            return $presenter->getPayment();
         }
-        return $presenter;
+
+        throw new \Exception('PaymentSuccessPrintWidget used within not allowed presenter: ' . get_class($presenter));
     }
 }
