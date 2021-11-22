@@ -146,7 +146,14 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             return;
         }
 
-        list($user, $userCreated) = $this->createUserIfNotExists($coupon->email);
+        try {
+            list($user, $userCreated) = $this->createUserIfNotExists($coupon->email);
+        } catch (\Exception $exception) {
+            Debugger::log("Unable to create user '{$coupon->email}': {$exception->getMessage()}", ILogger::ERROR);
+            $output->writeln("<error>Unable to create user '{$coupon->email}': {$exception->getMessage()}</error>");
+            return;
+        }
+
         $output->writeln("User <info>{$coupon->email}</info> - " . ($userCreated ? "created" : "exists"));
 
         $address = $this->changeAddressOwner($user, $coupon);
