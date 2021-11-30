@@ -52,6 +52,7 @@ class PaymentSuccessGiftSubscriptionAddressWidget extends BaseWidget
         $form = $factory->create($payment);
         $factory->onSave = function ($form, $user) {
             $form['done']->setValue(1);
+            $form['send']->setDisabled(1);
             $this->redrawControl('giftSubscriptionFormSnippet');
         };
 
