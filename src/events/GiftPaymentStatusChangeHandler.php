@@ -91,6 +91,7 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
                 [
                     'variable_symbol' => $payment->variable_symbol,
                     'donated_to_email' => $paymentGiftCoupon->email,
+                    'gift_starts_at' => $paymentGiftCoupon->starts_at->format(DATE_RFC3339),
                 ],
                 null,
                 $attachments

@@ -62,6 +62,7 @@ class GiftPaymentTest extends BaseTestCase
         $params = $notification->getParams();
         $this->assertEquals($payment->variable_symbol, $params['variable_symbol']);
         $this->assertEquals('friend@example.com', $params['donated_to_email']);
+        $this->assertEquals('2040-01-01T00:00:00+01:00', $params['gift_starts_at']);
     }
 
     private function addGiftPayment($user, $subscriptionType, $giftEmail, DateTime $giftStartsAt)
