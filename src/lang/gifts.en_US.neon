@@ -19,6 +19,13 @@ components:
 			from: From
 			to: To
 		not_created: not created
+		current: Current
+		note_payment_must_be_paid: "The gift subscription will be sent to the target email only if payment is paid at the time of activation (status paid)."
+		success: "The gift subscription ID %paymentGiftCouponId% was updated."
+		errors:
+			payment_gift_coupon_not_found: "The gift subscription with ID %paymentGiftCouponId% doesn't exist."
+			already_sent: "The gift subscription with ID %paymentGiftCouponId% was already sent to the email %email%. Changes are not allowed."
+			starts_at_in_past: "Activation date of gift subscription with ID %paymentGiftCouponId% cannot be in past (provided: %paymentGiftCouponStartsAt%)."
 
 	gift_subscription_address:
 		title: Where do we deliver print for gifted subscription?

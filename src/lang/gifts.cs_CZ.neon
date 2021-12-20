@@ -19,6 +19,13 @@ components:
 			from: Od
 			to: Do
 		not_created: nevytvořené
+		current: Aktuální
+		note_payment_must_be_paid: "Dárkové předplatné bude odesláno na email obdarovaného, jen pokud bude platba v době aktivace zaplacena (status paid)."
+		success: "Dárkové předplatné ID %paymentGiftCouponId% bylo aktualizováno."
+		errors:
+			payment_gift_coupon_not_found: "Dárkové předplatné ID %paymentGiftCouponId% neexistuje."
+			already_sent: "Dárkové předplatné ID %paymentGiftCouponId% již bylo odesláno na email %email%. Změny nejsou povoleny."
+			starts_at_in_past: "Datum aktivace dárkového předplatného ID %paymentGiftCouponId% nesmí být v minulosti (nastaveno: %paymentGiftCouponStartsAt%)."
 
 	gift_subscription_address:
 		title: Kam budeme doručovať noviny darovaného předplatného?

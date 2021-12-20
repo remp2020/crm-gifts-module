@@ -16,6 +16,13 @@ components:
 			from: Od
 			to: Do
 		not_created: nevytvorené
+		current: Aktuálny
+		note_payment_must_be_paid: "Darčekové predplatné bude odoslané na email obdarovaného, len ak bude platba v čase aktivácie zaplatená (status paid)."
+		success: "Darčekové predplatné ID %paymentGiftCouponId% bolo aktualizované."
+		errors:
+			payment_gift_coupon_not_found: "Darčekové predplatné ID %paymentGiftCouponId% neexistuje."
+			already_sent: "Darčekové predplatné ID %paymentGiftCouponId% už bolo odoslané na email %email%. Zmeny nie sú povolené."
+			starts_at_in_past: "Dátum aktivácie darčekového predplatného ID %paymentGiftCouponId% nesmie byť v minulosti (nastavené: %paymentGiftCouponStartsAt%)."
 
 	donated_subscription_listing_widget:
 		donated_by: Darované od
