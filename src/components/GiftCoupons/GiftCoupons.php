@@ -112,6 +112,7 @@ class GiftCoupons extends BaseWidget
                 ->setRequired('subscriptions.data.subscriptions.required.start_time')
                 ->setAttribute('class', 'flatpickr')
                 ->setAttribute('flatpickr_datetime_seconds', "1")
+                ->setAttribute('flatpickr_mindate', "today")
                 ->setDisabled($formDisabled);
 
             $form->addHidden('id');
