@@ -75,6 +75,16 @@ class GiftsModule extends CrmModule
             'subscriptions.admin.user_subscriptions_listing.subscription',
             $this->getInstance(\Crm\GiftsModule\Components\DonatedSubscriptionListingWidget::class)
         );
+
+        $widgetManager->registerWidget(
+            'admin.products.order.right_column',
+            $this->getInstance(\Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo::class)
+        );
+
+        $widgetManager->registerWidget(
+            'orders.listing.payment_actions',
+            $this->getInstance(\Crm\GiftsModule\Components\GiftCoupons::class)
+        );
     }
 
     public function registerDataProviders(DataProviderManager $dataProviderManager)

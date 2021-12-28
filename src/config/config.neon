@@ -12,6 +12,7 @@ services:
 	- Crm\GiftsModule\Components\DonatedSubscriptionListingWidget
 	- Crm\GiftsModule\Components\GiftPaymentItemsListWidget
 	- Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget
+	- Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo
 
 	- Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler
 	- Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler

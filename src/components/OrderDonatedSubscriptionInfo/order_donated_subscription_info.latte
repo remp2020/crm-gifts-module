@@ -1,0 +1,39 @@
+{foreach $giftCoupons as $giftCoupon}
+<div class="panel panel-default">
+	<div class="panel-heading">
+
+		{*Doručovacia adressa pre obchod <small class="text-muted">#64562</small>*}
+		{_gifts.components.gift_coupons.modal_title} #{$giftCoupon->id}
+	</div>
+	<div class="panel-body">
+		<strong>{_gifts.components.gift_coupons.email}:</strong>
+		{if $user = $users[$giftCoupon->email]}
+		<a href="{plink :Users:UsersAdmin:show $user->id}" target="_blank">{$user->public_name}</a>
+		{else}
+		{$giftCoupon->email}
+		{/if}<br>
+
+		<strong>{_gifts.components.gift_coupons.start_at}:</strong>
+		{$giftCoupon->starts_at|date:"d.m.y H:i"}<br>
+
+		<strong>{_gifts.components.gift_coupons.sent}:</strong>
+		{if $giftCoupon->status === Crm\GiftsModule\Repository\PaymentGiftCouponsRepository::STATUS_NOT_SENT}
+			{_system.no}
+		{else}
+			{_system.yes}
+		{/if}<br>
+
+		{if $giftCoupon->status === Crm\GiftsModule\Repository\PaymentGiftCouponsRepository::STATUS_SENT}
+			<h4>{_gifts.components.gift_coupons.subscription.header}:</h4>
+			{if $giftCoupon->subscription_id}
+				<strong>{_gifts.components.gift_coupons.subscription.type}: </strong> {$giftCoupon->subscription->type} <br>
+				<strong>{_gifts.components.gift_coupons.subscription.from}: </strong> {$giftCoupon->subscription->start_time|date:"d.m.y H:i"} <br>
+				<strong>{_gifts.components.gift_coupons.subscription.to}: </strong> {$giftCoupon->subscription->end_time|date:"d.m.y H:i"} <br>
+			{else}
+				{_gifts.components.gift_coupons.not_created}
+			{/if}
+
+		{/if}
+	</div>
+</div>
+{/foreach}
