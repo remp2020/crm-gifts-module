@@ -21,11 +21,6 @@ class GiftsModule extends CrmModule
     public function registerEventHandlers(Emitter $emitter)
     {
         $emitter->addListener(
-            \Crm\PaymentsModule\Events\PaymentChangeStatusEvent::class,
-            $this->getInstance(\Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler::class)
-        );
-
-        $emitter->addListener(
             \Crm\SalesFunnelModule\Events\PaymentItemContainerReadyEvent::class,
             $this->getInstance(\Crm\GiftsModule\Events\PaymentItemContainerReadyEventHandler::class)
         );
