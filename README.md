@@ -75,7 +75,7 @@ php bin/command.php application:seed
 			- setExtendMethod('extend_same_content_access')
 	```
 
-5. `SendWelcomeEmailHandler` listens to `UserCreatedEvent`.
+5. `SendWelcomeEmailHandler` listens to `UserRegisteredEvent`.
    - If created user has `source === PaymentGiftCouponsRepository::USER_SOURCE_GIFT_COUPON`, `NotificationEvent(welcome_email_gift_coupon)` is emitted.
 
 6. `SubscriptionsStartsEventHandler` listens to `SubscriptionStartsEvent`.

@@ -147,14 +147,14 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         }
 
         try {
-            list($user, $userCreated) = $this->createUserIfNotExists($coupon->email);
+            list($user, $userRegistered) = $this->createUserIfNotExists($coupon->email);
         } catch (\Exception $exception) {
             Debugger::log("Unable to create user '{$coupon->email}': {$exception->getMessage()}", ILogger::ERROR);
             $output->writeln("<error>Unable to create user '{$coupon->email}': {$exception->getMessage()}</error>");
             return;
         }
 
-        $output->writeln("User <info>{$coupon->email}</info> - " . ($userCreated ? "created" : "exists"));
+        $output->writeln("User <info>{$coupon->email}</info> - " . ($userRegistered ? "created" : "exists"));
 
         $address = $this->changeAddressOwner($user, $coupon);
 
@@ -200,12 +200,12 @@ class ActivatePurchasedGiftCouponsCommand extends Command
     private function createUserIfNotExists($email)
     {
         $user = $this->usersRepository->getByEmail($email);
-        $userCreated = false;
+        $userRegistered = false;
         if (!$user) {
             $user = $this->userManager->addNewUser($email, true, PaymentGiftCouponsRepository::USER_SOURCE_GIFT_COUPON);
-            $userCreated = true;
+            $userRegistered = true;
         }
-        return [$user, $userCreated];
+        return [$user, $userRegistered];
     }
 
     private function changeAddressOwner(IRow $user, IRow $coupon)
