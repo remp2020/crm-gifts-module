@@ -83,7 +83,7 @@ php bin/command.php application:seed
 
 ## Notification email after the payment
 
-Both of the following options require [REMP Mailer](https://gitlab.com/remp/mailer-skeleton/) integration, or other custom implementation handling `NotificationEvent`.
+Both of the following options require [REMP Mailer](https://github.com/remp2020/mailer-skeleton/) integration, or other custom implementation handling `NotificationEvent`.
 
 ### Default email
 
