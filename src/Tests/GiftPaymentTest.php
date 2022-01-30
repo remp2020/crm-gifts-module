@@ -3,6 +3,7 @@
 namespace Crm\GiftsModule\Tests;
 
 use Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler;
+use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
 use Crm\PaymentsModule\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repository\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
@@ -34,10 +35,20 @@ class GiftPaymentTest extends BaseTestCase
         $this->userManager = $this->inject(UserManager::class);
         $this->subscriptionTypeBuilder = $this->inject(SubscriptionTypeBuilder::class);
 
+        $this->emitter->addListener(
+            PaymentChangeStatusEvent::class,
+            $this->inject(GiftPaymentStatusChangeHandler::class)
+        );
+
         /** @var GiftPaymentStatusChangeHandler $giftPaymentStatusChangeHandler */
         $giftPaymentStatusChangeHandler = $this->inject(GiftPaymentStatusChangeHandler::class);
         // Avoid attaching PDF coupon
         $giftPaymentStatusChangeHandler->disableAttachment();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->emitter->removeAllListeners(GiftPaymentStatusChangeHandler::class);
     }
 
     public function testGiftPayment()
