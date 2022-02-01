@@ -6,9 +6,8 @@ use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\PaymentItem\GiftPaymentItem;
 use Crm\PaymentsModule\Gateways\BankTransfer;
-use Crm\PaymentsModule\Presenters\BankTransferPresenter;
+use Crm\PaymentsModule\PaymentAwareInterface;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
-use Crm\SalesFunnelModule\Presenters\SalesFunnelPresenter;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\IRow;
 
@@ -92,7 +91,7 @@ class PaymentSuccessGiftSubscriptionAddressWidget extends BaseWidget
     public function getPayment(): ActiveRow
     {
         $presenter = $this->getPresenter();
-        if ($presenter instanceof SalesFunnelPresenter || $presenter instanceof BankTransferPresenter) {
+        if ($presenter instanceof PaymentAwareInterface) {
             return $presenter->getPayment();
         }
 
