@@ -3,6 +3,7 @@
 namespace Crm\GiftsModule\Commands;
 
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
+use Crm\GiftsModule\GiftsModule;
 use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
@@ -168,7 +169,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             false,
             true,
             $user,
-            SubscriptionsRepository::TYPE_GIFT,
+            GiftsModule::SUBSCRIPTION_TYPE_GIFT,
             $startTime,
             null,
             null,

@@ -2,8 +2,8 @@
 
 namespace Crm\GiftsModule\Events;
 
+use Crm\GiftsModule\GiftsModule;
 use Crm\SubscriptionsModule\Events\SubscriptionStartsEvent;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Events\NotificationEvent;
 use League\Event\AbstractListener;
 use League\Event\Emitter;
@@ -28,7 +28,7 @@ class SubscriptionsStartsEventHandler extends AbstractListener
 
         $subscription = $event->getSubscription();
 
-        if (!in_array($subscription->type, [SubscriptionsRepository::TYPE_GIFT])) {
+        if ($subscription->type !== GiftsModule::SUBSCRIPTION_TYPE_GIFT) {
             return;
         }
 
