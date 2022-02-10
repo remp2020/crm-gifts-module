@@ -11,6 +11,8 @@ use League\Event\Emitter;
 
 class GiftsModule extends CrmModule
 {
+    public const SUBSCRIPTION_TYPE_GIFT = 'gift';
+
     public function registerCommands(CommandsContainerInterface $commandsContainer)
     {
         $commandsContainer->registerCommand(

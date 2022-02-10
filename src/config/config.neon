@@ -3,6 +3,10 @@ services:
 		setup:
 			- addModule(Crm\GiftsModule\GiftsModule())
 
+	subscriptionsRepository:
+		setup:
+			- registerType(Crm\GiftsModule\GiftsModule::SUBSCRIPTION_TYPE_GIFT)
+
 	paymentGiftCouponsRepository: Crm\GiftsModule\Repository\PaymentGiftCouponsRepository
 
 	activatePurchasedGiftCouponsCommand:
