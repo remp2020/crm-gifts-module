@@ -55,15 +55,15 @@ components:
 				country_id: Musíte vybrat zemi
 
 gift_payment_item:
-    prefix: "Dárkové předplatné: "
+	prefix: "Dárkové předplatné: "
 
 seeders:
 	address_types:
 		gift_subscription_type: Dárkové předplatné
 
 admin:
-    address:
-        cant_delete: 'Tato adresa se používá pro darované předplatné'
+	address:
+		cant_delete: 'Tato adresa se používá pro darované předplatné'
 
 data_provider:
 	payment_item_types_filter:
