@@ -4,6 +4,9 @@ config:
 		description: 'Táto príloha <i>(kupón)</i> bude priložená do emailu odoslaného darcovi predplatného. <br><i>(napr. <code>https://a-static.projektn.sk/2019/09/darcekova_poukazka_dennikn.pdf</code>)</i>'
 
 components:
+	donated_subscription_listing_widget:
+		donated_by: Darované od
+
 	gift_coupons:
 		button_title: Darované predplatné
 		modal_title: Darované predplatné
@@ -23,9 +26,6 @@ components:
 			payment_gift_coupon_not_found: "Darčekové predplatné ID %paymentGiftCouponId% neexistuje."
 			already_sent: "Darčekové predplatné ID %paymentGiftCouponId% už bolo odoslané na email %email%. Zmeny nie sú povolené."
 			starts_at_in_past: "Dátum aktivácie darčekového predplatného ID %paymentGiftCouponId% nesmie byť v minulosti (nastavené: %paymentGiftCouponStartsAt%)."
-
-	donated_subscription_listing_widget:
-		donated_by: Darované od
 
 	gift_subscription_address:
 		title: Kam budeme doručovať noviny darovaného predplatného?
