@@ -1,71 +1,71 @@
 config:
-	gift_subscription_coupon_attachment:
-		name: Gift subscription attachment URL
-		description: 'This attachment <i>(coupon)</i> will be attached to email sent to giver of gift subscription. <br><i>(eg. <code>https://a-static.projektn.sk/2019/09/darcekova_poukazka_dennikn.pdf</code>)</i>'
+    gift_subscription_coupon_attachment:
+        name: Gift subscription attachment URL
+        description: 'This attachment <i>(coupon)</i> will be attached to email sent to giver of gift subscription. <br><i>(eg. <code>https://a-static.projektn.sk/2019/09/darcekova_poukazka_dennikn.pdf</code>)</i>'
 
 components:
-	donated_subscription_listing_widget:
-		donated_by: Donated by
+    donated_subscription_listing_widget:
+        donated_by: Donated by
 
-	gift_coupons:
-		button_title: Gift subscriptions
-		modal_title: Gift subscription
-		email: E-mail
-		start_at: Start at
-		sent: Sent
-		subscription:
-			header: Subscription
-			type: Type
-			from: From
-			to: To
-		not_created: not created
-		current: Current
-		note_payment_must_be_paid: "The gift subscription will be sent to the target email only if payment is paid at the time of activation (status paid)."
-		success: "The gift subscription ID %paymentGiftCouponId% was updated."
-		errors:
-			payment_gift_coupon_not_found: "The gift subscription with ID %paymentGiftCouponId% doesn't exist."
-			already_sent: "The gift subscription with ID %paymentGiftCouponId% was already sent to the email %email%. Changes are not allowed."
-			starts_at_in_past: "Activation date of gift subscription with ID %paymentGiftCouponId% cannot be in past (provided: %paymentGiftCouponStartsAt%)."
+    gift_coupons:
+        button_title: Gift subscriptions
+        modal_title: Gift subscription
+        email: E-mail
+        start_at: Start at
+        sent: Sent
+        subscription:
+            header: Subscription
+            type: Type
+            from: From
+            to: To
+        not_created: not created
+        current: Current
+        note_payment_must_be_paid: "The gift subscription will be sent to the target email only if payment is paid at the time of activation (status paid)."
+        success: "The gift subscription ID %paymentGiftCouponId% was updated."
+        errors:
+            payment_gift_coupon_not_found: "The gift subscription with ID %paymentGiftCouponId% doesn't exist."
+            already_sent: "The gift subscription with ID %paymentGiftCouponId% was already sent to the email %email%. Changes are not allowed."
+            starts_at_in_past: "Activation date of gift subscription with ID %paymentGiftCouponId% cannot be in past (provided: %paymentGiftCouponStartsAt%)."
 
-	gift_subscription_address:
-		title: Where do we deliver print for gifted subscription?
-		open: Fill in delivery address.
-		saved: All data is stored
-		additional_info: 'Please, fill in the address for delivery of gifted newspaper.'
-		need_to_fill: You have to fill delivery address of gifted newspaper to continue.
+    gift_subscription_address:
+        title: Where do we deliver print for gifted subscription?
+        open: Fill in delivery address.
+        saved: All data is stored
+        additional_info: 'Please, fill in the address for delivery of gifted newspaper.'
+        need_to_fill: You have to fill delivery address of gifted newspaper to continue.
 
-		form:
-			label:
-				name: Name
-				last_name: Last name
-				phone_number: Phone number
-				address: Street
-				number: Number
-				zip: ZIP
-				city: City
-				country_id: Country
-				save: Save
-			required:
-				name: You must fill in your name
-				last_name: You must fill in your last name
-				address: You must fill the street
-				number: You must fill the house number
-				zip: You must fill a zip code
-				city: You must select a city
-				country_id: You must select the country
+        form:
+            label:
+                name: Name
+                last_name: Last name
+                phone_number: Phone number
+                address: Street
+                number: Number
+                zip: ZIP
+                city: City
+                country_id: Country
+                save: Save
+            required:
+                name: You must fill in your name
+                last_name: You must fill in your last name
+                address: You must fill the street
+                number: You must fill the house number
+                zip: You must fill a zip code
+                city: You must select a city
+                country_id: You must select the country
 
 gift_payment_item:
-	prefix: "Gift subscription: "
+    prefix: "Gift subscription: "
 
 seeders:
-	address_types:
-		gift_subscription_type: Gift subscription
+    address_types:
+        gift_subscription_type: Gift subscription
 
 admin:
-	address:
-		cant_delete: 'This address is used in gift subscription.'
+    address:
+        cant_delete: 'This address is used in gift subscription.'
 
 data_provider:
-	payment_item_types_filter:
-		key:
-			gift: Gift
+    payment_item_types_filter:
+        key:
+            gift: Gift

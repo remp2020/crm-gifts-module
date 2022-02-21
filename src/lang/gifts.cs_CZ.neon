@@ -1,71 +1,71 @@
 config:
-	gift_subscription_coupon_attachment:
-		name: URL přílohy dárkového předplatného
-		description: 'Tato příloha <i>(kupón)</i> bude přiložena do emailu odeslaného dárci předplatného. <i>(např. <code>https://static.novydenik.com/2018/11/4_5974510460349711634.pdf</code>)</i>'
+    gift_subscription_coupon_attachment:
+        name: URL přílohy dárkového předplatného
+        description: 'Tato příloha <i>(kupón)</i> bude přiložena do emailu odeslaného dárci předplatného. <i>(např. <code>https://static.novydenik.com/2018/11/4_5974510460349711634.pdf</code>)</i>'
 
 components:
-	donated_subscription_listing_widget:
-		donated_by: Darované od
+    donated_subscription_listing_widget:
+        donated_by: Darované od
 
-	gift_coupons:
-		button_title: Darované předplatné
-		modal_title: Darované předplatné
-		email: E-mail
-		start_at: Start
-		sent: Odeslán
-		subscription:
-			header: Předplatné
-			type: Typ
-			from: Od
-			to: Do
-		not_created: nevytvořené
-		current: Aktuální
-		note_payment_must_be_paid: "Dárkové předplatné bude odesláno na email obdarovaného, jen pokud bude platba v době aktivace zaplacena (status paid)."
-		success: "Dárkové předplatné ID %paymentGiftCouponId% bylo aktualizováno."
-		errors:
-			payment_gift_coupon_not_found: "Dárkové předplatné ID %paymentGiftCouponId% neexistuje."
-			already_sent: "Dárkové předplatné ID %paymentGiftCouponId% již bylo odesláno na email %email%. Změny nejsou povoleny."
-			starts_at_in_past: "Datum aktivace dárkového předplatného ID %paymentGiftCouponId% nesmí být v minulosti (nastaveno: %paymentGiftCouponStartsAt%)."
+    gift_coupons:
+        button_title: Darované předplatné
+        modal_title: Darované předplatné
+        email: E-mail
+        start_at: Start
+        sent: Odeslán
+        subscription:
+            header: Předplatné
+            type: Typ
+            from: Od
+            to: Do
+        not_created: nevytvořené
+        current: Aktuální
+        note_payment_must_be_paid: "Dárkové předplatné bude odesláno na email obdarovaného, jen pokud bude platba v době aktivace zaplacena (status paid)."
+        success: "Dárkové předplatné ID %paymentGiftCouponId% bylo aktualizováno."
+        errors:
+            payment_gift_coupon_not_found: "Dárkové předplatné ID %paymentGiftCouponId% neexistuje."
+            already_sent: "Dárkové předplatné ID %paymentGiftCouponId% již bylo odesláno na email %email%. Změny nejsou povoleny."
+            starts_at_in_past: "Datum aktivace dárkového předplatného ID %paymentGiftCouponId% nesmí být v minulosti (nastaveno: %paymentGiftCouponStartsAt%)."
 
-	gift_subscription_address:
-		title: Kam budeme doručovať noviny darovaného předplatného?
-		open: Vyplnit adresu pro doručení.
-		saved: Všechny údaje jsou uložené
-		additional_info: 'Prosím, doplňte adresu pro doručení darovaných novin.'
-		need_to_fill: Pro pokračování musíte vyplnit adresu pro doručení darovaných novin.
+    gift_subscription_address:
+        title: Kam budeme doručovať noviny darovaného předplatného?
+        open: Vyplnit adresu pro doručení.
+        saved: Všechny údaje jsou uložené
+        additional_info: 'Prosím, doplňte adresu pro doručení darovaných novin.'
+        need_to_fill: Pro pokračování musíte vyplnit adresu pro doručení darovaných novin.
 
-		form:
-			label:
-				name: Jméno
-				last_name: Příjmení
-				phone_number: Tel. číslo
-				address: Ulice
-				number: Číslo domu
-				zip: PSČ
-				city: Město
-				country_id: Země
-				save: Uložit údaje
-			required:
-				name: Musíte vyplnit Vaše jméno
-				last_name: Musíte vyplnit Vaše příjmení
-				address: Musíte zadat ulici
-				number: Musíte zadat číslo domu
-				zip: Musíte zadať PSČ
-				city: Musíte zadat město
-				country_id: Musíte vybrat zemi
+        form:
+            label:
+                name: Jméno
+                last_name: Příjmení
+                phone_number: Tel. číslo
+                address: Ulice
+                number: Číslo domu
+                zip: PSČ
+                city: Město
+                country_id: Země
+                save: Uložit údaje
+            required:
+                name: Musíte vyplnit Vaše jméno
+                last_name: Musíte vyplnit Vaše příjmení
+                address: Musíte zadat ulici
+                number: Musíte zadat číslo domu
+                zip: Musíte zadať PSČ
+                city: Musíte zadat město
+                country_id: Musíte vybrat zemi
 
 gift_payment_item:
-	prefix: "Dárkové předplatné: "
+    prefix: "Dárkové předplatné: "
 
 seeders:
-	address_types:
-		gift_subscription_type: Dárkové předplatné
+    address_types:
+        gift_subscription_type: Dárkové předplatné
 
 admin:
-	address:
-		cant_delete: 'Tato adresa se používá pro darované předplatné'
+    address:
+        cant_delete: 'Tato adresa se používá pro darované předplatné'
 
 data_provider:
-	payment_item_types_filter:
-		key:
-			gift: Dar
+    payment_item_types_filter:
+        key:
+            gift: Dar
