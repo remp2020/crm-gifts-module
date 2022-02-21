@@ -55,15 +55,15 @@ components:
 				country_id: You must select the country
 
 gift_payment_item:
-    prefix: "Gift subscription: "
+	prefix: "Gift subscription: "
 
 seeders:
 	address_types:
 		gift_subscription_type: Gift subscription
 
 admin:
-    address:
-        cant_delete: 'This address is used in gift subscription.'
+	address:
+		cant_delete: 'This address is used in gift subscription.'
 
 data_provider:
 	payment_item_types_filter:
