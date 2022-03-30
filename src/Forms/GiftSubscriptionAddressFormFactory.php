@@ -99,8 +99,7 @@ class GiftSubscriptionAddressFormFactory
             ->getControlPrototype()
             ->setName('button')
             ->setAttribute('class', 'btn btn-success')
-            ->setAttribute('style', 'float: right')
-            ->setHtml($this->translator->translate('gifts.components.gift_subscription_address.form.label.save'));
+            ->setAttribute('style', 'float: right');
 
         $form->onSuccess[] = [$this, 'formSucceeded'];
 
