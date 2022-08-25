@@ -2,6 +2,7 @@
 
 namespace Crm\GiftsModule\Tests;
 
+use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\GiftsModule\GiftsModule;
 use Crm\PaymentsModule\Repository\PaymentGatewaysRepository;
@@ -21,7 +22,6 @@ use Crm\UsersModule\Events\NotificationEvent;
 use Crm\UsersModule\Repository\LoginAttemptsRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use Crm\UsersModule\Tests\TestNotificationHandler;
-use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 
 abstract class BaseTestCase extends DatabaseTestCase

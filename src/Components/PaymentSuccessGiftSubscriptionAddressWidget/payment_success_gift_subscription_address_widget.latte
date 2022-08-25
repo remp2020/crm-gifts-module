@@ -21,7 +21,7 @@
 	<script type="text/javascript">
         $(function() {
             registerFormCallback(function() {
-                var $giftSubscriptionAddressForm = $("#{$control['giftSubscriptionAddressForm']->getElementPrototype()->id|noescape}");
+                var $giftSubscriptionAddressForm = $("#" + {$control['giftSubscriptionAddressForm']->getElementPrototype()->id|noescape});
                 if (!Nette.validateForm($giftSubscriptionAddressForm[0])) {
                     errorCallback();
                     return;
@@ -34,7 +34,7 @@
                     complete: function() {
                         // this case handles scenario when Nette.validateForm said all is fine, but successHandler
                         // on backend could have triggered an error anyway
-                        var giftSubscriptionFormSaved = $('#{$control["giftSubscriptionAddressForm"]["done"]->htmlId|noescape}').val() === "1";
+                        var giftSubscriptionFormSaved = $('#' + {$control["giftSubscriptionAddressForm"]["done"]->htmlId|noescape}).val() === "1";
                         if (!giftSubscriptionFormSaved) {
                             alert({_gifts.components.gift_subscription_address.need_to_fill});
                             errorCallback();
@@ -49,6 +49,6 @@
 	</script>
 
 	<script n:if="!$presenter->isAjax()">
-        $("#{$control['giftSubscriptionAddressForm']->getElementPrototype()->id|noescape}").hide();
+        $("#" + {$control['giftSubscriptionAddressForm']->getElementPrototype()->id|noescape}).hide();
 	</script>
 {/block}

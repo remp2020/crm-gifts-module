@@ -2,6 +2,7 @@
 
 namespace Crm\GiftsModule\Forms;
 
+use Contributte\Translation\Translator;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
@@ -11,7 +12,6 @@ use Crm\UsersModule\Repository\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
 use Crm\UsersModule\Repository\UsersRepository;
-use Kdyby\Translation\Translator;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Tomaj\Form\Renderer\BootstrapRenderer;
