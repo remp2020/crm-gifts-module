@@ -2,22 +2,22 @@
 
 namespace Crm\GiftsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\ActiveRow;
 
-class OrderDonatedSubscriptionInfo extends BaseWidget
+class OrderDonatedSubscriptionInfo extends BaseLazyWidget
 {
     private $templateName = 'order_donated_subscription_info.latte';
 
     private $usersRepository;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         UsersRepository $usersRepository
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
         $this->usersRepository = $usersRepository;
     }
 

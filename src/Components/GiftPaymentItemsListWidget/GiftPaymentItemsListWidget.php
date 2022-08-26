@@ -2,11 +2,11 @@
 
 namespace Crm\GiftsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\GiftsModule\PaymentItem\GiftPaymentItem;
 use Nette\Database\Table\ActiveRow;
 
-class GiftPaymentItemsListWidget extends BaseWidget
+class GiftPaymentItemsListWidget extends BaseLazyWidget
 {
     private $templateName = 'gift_payment_items_list_widget.latte';
 

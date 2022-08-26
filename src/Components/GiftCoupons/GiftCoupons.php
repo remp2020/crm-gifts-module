@@ -3,8 +3,8 @@
 namespace Crm\GiftsModule\Components;
 
 use Crm\ApplicationModule\Helpers\UserDateHelper;
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Application\UI\Form;
@@ -21,7 +21,7 @@ use Tracy\Debugger;
  *
  * @package Crm\ProductsModule\Components
  */
-class GiftCoupons extends BaseWidget
+class GiftCoupons extends BaseLazyWidget
 {
     private $templateName = 'gift_coupons.latte';
 
@@ -34,13 +34,13 @@ class GiftCoupons extends BaseWidget
     private $userDateHelper;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
         UsersRepository $usersRepository,
         Translator $translator,
         UserDateHelper $userDateHelper
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
 
         $this->paymentGiftCouponsRepository = $paymentGiftCouponsRepository;
         $this->usersRepository = $usersRepository;

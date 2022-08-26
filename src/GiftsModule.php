@@ -5,7 +5,7 @@ use Crm\ApplicationModule\Commands\CommandsContainerInterface;
 use Crm\ApplicationModule\CrmModule;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\SeederManager;
-use Crm\ApplicationModule\Widget\WidgetManagerInterface;
+use Crm\ApplicationModule\Widget\LazyWidgetManagerInterface;
 use Crm\GiftsModule\DataProvider\CanDeleteAddressDataProvider;
 use League\Event\Emitter;
 
@@ -50,37 +50,37 @@ class GiftsModule extends CrmModule
         $seederManager->addSeeder($this->getInstance(\Crm\GiftsModule\Seeders\ConfigsSeeder::class));
     }
 
-    public function registerWidgets(WidgetManagerInterface $widgetManager)
+    public function registerLazyWidgets(LazyWidgetManagerInterface $widgetManager)
     {
         $widgetManager->registerWidget(
             'admin.payments.listing.action',
-            $this->getInstance(\Crm\GiftsModule\Components\GiftCoupons::class),
+            \Crm\GiftsModule\Components\GiftCoupons::class,
             400
         );
 
         $widgetManager->registerWidget(
             'payment.address',
-            $this->getInstance(\Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget::class)
+            \Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget::class
         );
 
         $widgetManager->registerWidget(
             'payments.admin.payment_item_listing',
-            $this->getInstance(\Crm\GiftsModule\Components\GiftPaymentItemsListWidget::class)
+            \Crm\GiftsModule\Components\GiftPaymentItemsListWidget::class
         );
 
         $widgetManager->registerWidget(
             'subscriptions.admin.user_subscriptions_listing.subscription',
-            $this->getInstance(\Crm\GiftsModule\Components\DonatedSubscriptionListingWidget::class)
+            \Crm\GiftsModule\Components\DonatedSubscriptionListingWidget::class
         );
 
         $widgetManager->registerWidget(
             'admin.products.order.right_column',
-            $this->getInstance(\Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo::class)
+            \Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo::class
         );
 
         $widgetManager->registerWidget(
             'orders.listing.payment_actions',
-            $this->getInstance(\Crm\GiftsModule\Components\GiftCoupons::class)
+            \Crm\GiftsModule\Components\GiftCoupons::class
         );
     }
 

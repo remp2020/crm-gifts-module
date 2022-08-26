@@ -2,7 +2,7 @@
 
 namespace Crm\GiftsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\PaymentItem\GiftPaymentItem;
 use Crm\PaymentsModule\Gateways\BankTransfer;
@@ -10,7 +10,7 @@ use Crm\PaymentsModule\PaymentAwareInterface;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Nette\Database\Table\ActiveRow;
 
-class PaymentSuccessGiftSubscriptionAddressWidget extends BaseWidget
+class PaymentSuccessGiftSubscriptionAddressWidget extends BaseLazyWidget
 {
     private $templatePath = __DIR__ . DIRECTORY_SEPARATOR . 'payment_success_gift_subscription_address_widget.latte';
 

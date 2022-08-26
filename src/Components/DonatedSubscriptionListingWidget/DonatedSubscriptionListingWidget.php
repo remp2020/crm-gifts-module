@@ -2,7 +2,7 @@
 
 namespace Crm\GiftsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Nette\Database\Table\ActiveRow;
 
 /**
@@ -11,7 +11,7 @@ use Nette\Database\Table\ActiveRow;
  *
  * @package Crm\ProductsModule\Components
  */
-class DonatedSubscriptionListingWidget extends BaseWidget
+class DonatedSubscriptionListingWidget extends BaseLazyWidget
 {
     private $templateName = 'donated_subscription_listing_widget.latte';
 
