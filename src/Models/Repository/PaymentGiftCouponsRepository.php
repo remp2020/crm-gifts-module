@@ -21,8 +21,8 @@ class PaymentGiftCouponsRepository extends Repository
 
     public function __construct(
         Explorer $database,
-        Storage $cacheStorage = null,
-        AuditLogRepository $auditLogRepository
+        AuditLogRepository $auditLogRepository,
+        Storage $cacheStorage = null
     ) {
         parent::__construct($database, $cacheStorage);
         $this->auditLogRepository = $auditLogRepository;
