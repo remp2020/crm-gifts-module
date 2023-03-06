@@ -10,6 +10,7 @@ use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\CountriesRepository;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
+use Nette\Utils\ArrayHash;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class GiftSubscriptionAddressFormFactory
@@ -97,7 +98,7 @@ class GiftSubscriptionAddressFormFactory
         return null;
     }
 
-    public function formSucceeded($form, $values)
+    public function formSucceeded(Form $form, ArrayHash $values)
     {
         $user = $this->payment->user;
 
