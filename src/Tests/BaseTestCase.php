@@ -12,7 +12,7 @@ use Crm\PaymentsModule\Repository\RecurrentPaymentsRepository;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccess;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
@@ -49,7 +49,7 @@ abstract class BaseTestCase extends DatabaseTestCase
             RecurrentPaymentsRepository::class,
             // Content access
             ContentAccessRepository::class,
-            SubscriptionTypeContentAccess::class
+            SubscriptionTypeContentAccessRepository::class
         ];
     }
 
