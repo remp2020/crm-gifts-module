@@ -91,7 +91,6 @@ class GiftCoupons extends BaseLazyWidget
             if (!$paymentGiftCoupon) {
                 throw new \Exception("Unable to find payment gift coupon with ID [{$paymentGiftCouponId}].");
             }
-
             $formDisabled = false;
             // disable editing if gift was already sent or start time is in less than 5 minutes (just to be sure)
             if ($paymentGiftCoupon->status === PaymentGiftCouponsRepository::STATUS_SENT
@@ -108,11 +107,12 @@ class GiftCoupons extends BaseLazyWidget
                 ->setDisabled($formDisabled);
 
             $form->addText('starts_at', 'gifts.components.gift_coupons.start_at')
-                ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.start_time')
+                ->setHtmlAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.start_time')
                 ->setRequired('subscriptions.data.subscriptions.required.start_time')
-                ->setAttribute('class', 'flatpickr')
-                ->setAttribute('flatpickr_datetime_seconds', "1")
-                ->setAttribute('flatpickr_mindate', "today")
+                ->setHtmlAttribute('class', 'flatpickr')
+                ->setHtmlAttribute('flatpickr_datetime_seconds', "1")
+                ->setHtmlAttribute('flatpickr_mindate', "today")
+                ->setHtmlAttribute('flatpickr_allow_invalid_preload', "1")
                 ->setDisabled($formDisabled);
 
             $form->addHidden('id');
