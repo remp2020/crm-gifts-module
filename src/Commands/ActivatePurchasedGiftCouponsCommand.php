@@ -119,39 +119,45 @@ class ActivatePurchasedGiftCouponsCommand extends Command
     private function processCoupon($coupon, OutputInterface $output)
     {
         $output->writeln("Processing gift for email <info>{$coupon->email}</info>");
+        $prefixError = "Unable to activate gift subscription coupon #[{$coupon->id}] from payment ID [{$coupon->payment_id}]: ";
 
         if ($coupon->product_id) {
             $subscriptionTypeCode = $this->productPropertiesRepository->getPropertyByCode($coupon->product, 'subscription_type_code');
             if (!$subscriptionTypeCode) {
-                Debugger::log("Missing assigned 'Subscription type code' for product {$coupon->product->name}", ILogger::ERROR);
-                $output->writeln("<error>Missing assigned 'Subscription type code' for product {$coupon->product->name}</error>");
+                $errorMsg = $prefixError . "Missing product.subscription_type_code from product ID #{$coupon->product->id}.";
+                Debugger::log($errorMsg, ILogger::ERROR);
+                $output->writeln("<error>{$errorMsg}</error>");
                 return;
             }
 
             $subscriptionType = $this->subscriptionTypesRepository->findByCode($subscriptionTypeCode);
             if (!$subscriptionType) {
-                Debugger::log("No subscription assigned for code {$subscriptionTypeCode}", ILogger::ERROR);
-                $output->writeln("<error>No subscription assigned for code <info>{$subscriptionTypeCode}</info></error>");
+                $errorMsg = $prefixError . "Unable to find subscription type with code [{$subscriptionTypeCode}].";
+                Debugger::log($errorMsg, ILogger::ERROR);
+                $output->writeln("<error>{$errorMsg}</error>");
                 return;
             }
         } elseif ($coupon->subscription_type_id) {
             $subscriptionType = $this->subscriptionTypesRepository->find($coupon->subscription_type_id);
             if (!$subscriptionType) {
-                Debugger::log("Unable to find subscription type with ID {$coupon->subscription_type_id}", ILogger::ERROR);
-                $output->writeln("<error>Unable to find subscription type with ID <info>{$coupon->subscription_type_id}</info></error>");
+                $errorMsg = $prefixError . "Unable to find subscription type with ID #[{$coupon->subscription_type_id}].";
+                Debugger::log($errorMsg, ILogger::ERROR);
+                $output->writeln("<error>{$errorMsg}</error>");
                 return;
             }
         } else {
-            Debugger::log("Coupon with ID {$coupon->id} is missing `product_id` and `subscription_type_id`", ILogger::ERROR);
-            $output->writeln("<error>Coupon with ID <info>{$coupon->id}</info> is missing `product_id` and `subscription_type_id`</error>");
+            $errorMsg = $prefixError . "Coupon is missing `product_id` and `subscription_type_id`.";
+            Debugger::log($errorMsg, ILogger::ERROR);
+            $output->writeln("<error>{$errorMsg}</error>");
             return;
         }
 
         try {
             list($user, $userRegistered) = $this->createUserIfNotExists($coupon->email);
         } catch (\Exception $exception) {
-            Debugger::log("Unable to create user '{$coupon->email}': {$exception->getMessage()}", ILogger::ERROR);
-            $output->writeln("<error>Unable to create user '{$coupon->email}': {$exception->getMessage()}</error>");
+            $errorMsg = $prefixError . "Unable to create user [{$coupon->email}]: {$exception->getMessage()}.";
+            Debugger::log($errorMsg, ILogger::ERROR);
+            $output->writeln("<error>{$errorMsg}</error>");
             return;
         }
 
