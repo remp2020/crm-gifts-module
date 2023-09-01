@@ -212,6 +212,11 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             $user = $this->userManager->addNewUser($email, true, PaymentGiftCouponsRepository::USER_SOURCE_GIFT_COUPON);
             $userRegistered = true;
         }
+        if (!$user->active) {
+            $this->usersRepository->update($user, [
+                'active' => true,
+            ]);
+        }
         return [$user, $userRegistered];
     }
 
