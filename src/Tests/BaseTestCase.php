@@ -75,7 +75,7 @@ abstract class BaseTestCase extends DatabaseTestCase
         
         // Register required event handlers
         $giftsModule = new GiftsModule($this->container, $this->inject(Translator::class));
-        $giftsModule->registerEventHandlers($this->emitter);
+        $giftsModule->registerLazyEventHandlers($this->emitter);
     }
 
     /**
