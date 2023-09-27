@@ -20,27 +20,27 @@ class GiftsModule extends CrmModule
         );
     }
 
-    public function registerEventHandlers(Emitter $emitter)
+    public function registerLazyEventHandlers(\Crm\ApplicationModule\Event\LazyEventEmitter $emitter)
     {
         $emitter->addListener(
             \Crm\SalesFunnelModule\Events\PaymentItemContainerReadyEvent::class,
-            $this->getInstance(\Crm\GiftsModule\Events\PaymentItemContainerReadyEventHandler::class)
+            \Crm\GiftsModule\Events\PaymentItemContainerReadyEventHandler::class
         );
 
         $emitter->addListener(
             \Crm\PaymentsModule\Events\NewPaymentEvent::class,
-            $this->getInstance(\Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler::class),
+            \Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler::class,
             Emitter::P_HIGH
         );
 
         $emitter->addListener(
             \Crm\UsersModule\Events\UserRegisteredEvent::class,
-            $this->getInstance(\Crm\GiftsModule\Events\SendWelcomeEmailHandler::class)
+            \Crm\GiftsModule\Events\SendWelcomeEmailHandler::class
         );
 
         $emitter->addListener(
             \Crm\SubscriptionsModule\Events\SubscriptionStartsEvent::class,
-            $this->getInstance(\Crm\GiftsModule\Events\SubscriptionsStartsEventHandler::class)
+            \Crm\GiftsModule\Events\SubscriptionsStartsEventHandler::class
         );
     }
 
