@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\GiftsModule\Components;
+namespace Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;

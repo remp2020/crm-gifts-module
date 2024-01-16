@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\GiftsModule\Components;
+namespace Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\GiftsModule\Components;
+namespace Crm\GiftsModule\Components\GiftCoupons;
 
 use Crm\ApplicationModule\Helpers\UserDateHelper;
 use Crm\ApplicationModule\Widget\BaseLazyWidget;

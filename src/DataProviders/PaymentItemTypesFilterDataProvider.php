@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\GiftsModule\DataProvider;
+namespace Crm\GiftsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\GiftsModule\PaymentItem\GiftPaymentItem;

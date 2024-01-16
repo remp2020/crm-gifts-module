@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\GiftsModule\Components;
+namespace Crm\GiftsModule\Components\DonatedSubscriptionListingWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Nette\Database\Table\ActiveRow;
