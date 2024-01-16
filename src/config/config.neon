@@ -7,16 +7,16 @@ services:
 		setup:
 			- registerType(Crm\GiftsModule\GiftsModule::SUBSCRIPTION_TYPE_GIFT)
 
-	paymentGiftCouponsRepository: Crm\GiftsModule\Repository\PaymentGiftCouponsRepository
+	paymentGiftCouponsRepository: Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository
 
 	activatePurchasedGiftCouponsCommand:
 		factory: Crm\GiftsModule\Commands\ActivatePurchasedGiftCouponsCommand
 
-	- Crm\GiftsModule\Components\GiftCoupons
-	- Crm\GiftsModule\Components\DonatedSubscriptionListingWidget
-	- Crm\GiftsModule\Components\GiftPaymentItemsListWidget
-	- Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget
-	- Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo
+	- Crm\GiftsModule\Components\GiftCoupons\GiftCoupons
+	- Crm\GiftsModule\Components\DonatedSubscriptionListingWidget\DonatedSubscriptionListingWidget
+	- Crm\GiftsModule\Components\GiftPaymentItemsListWidget\GiftPaymentItemsListWidget
+	- Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget\PaymentSuccessGiftSubscriptionAddressWidget
+	- Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo\OrderDonatedSubscriptionInfo
 
 	- Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler
 	- Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler
@@ -29,5 +29,5 @@ services:
 	- Crm\GiftsModule\Seeders\AddressTypesSeeder
 	- Crm\GiftsModule\Seeders\ConfigsSeeder
 
-	canDeleteAddressDataProvider: Crm\GiftsModule\DataProvider\CanDeleteAddressDataProvider
-	- Crm\GiftsModule\DataProvider\PaymentItemTypesFilterDataProvider
+	canDeleteAddressDataProvider: Crm\GiftsModule\DataProviders\CanDeleteAddressDataProvider
+	- Crm\GiftsModule\DataProviders\PaymentItemTypesFilterDataProvider

@@ -43,14 +43,14 @@
                     {$giftCoupon->starts_at|userDate}<br>
 
                     <strong>{_gifts.components.gift_coupons.sent}:</strong>
-                    {if $giftCoupon->status === Crm\GiftsModule\Repository\PaymentGiftCouponsRepository::STATUS_NOT_SENT}
+                    {if $giftCoupon->status === Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository::STATUS_NOT_SENT}
                         {_system.no}
                     {else}
                         {_system.yes}
                     {/if}
                 </p>
 
-                {if $giftCoupon->status === Crm\GiftsModule\Repository\PaymentGiftCouponsRepository::STATUS_SENT}
+                {if $giftCoupon->status === Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository::STATUS_SENT}
                     <h4>{_gifts.components.gift_coupons.subscription.header}:</h4>
                     <p>
                     {if $giftCoupon->subscription_id}

@@ -2,7 +2,7 @@
 
 namespace Crm\GiftsModule\Events;
 
-use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
+use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\UsersModule\Events\NotificationEvent;
 use Crm\UsersModule\Events\UserRegisteredEvent;
 use League\Event\AbstractListener;

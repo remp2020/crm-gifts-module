@@ -4,7 +4,7 @@ namespace Crm\GiftsModule\Commands;
 
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\GiftsModule;
-use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
+use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
 use Crm\ProductsModule\Repository\OrdersRepository;

@@ -3,7 +3,7 @@
 namespace Crm\GiftsModule\Events;
 
 use Crm\ApplicationModule\Config\ApplicationConfig;
-use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
+use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
 use Crm\PaymentsModule\Repository\PaymentsRepository;
 use Crm\UsersModule\Events\NotificationEvent;

@@ -2,7 +2,7 @@
 
 namespace Crm\GiftsModule\Events;
 
-use Crm\GiftsModule\Repository\PaymentGiftCouponsRepository;
+use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\Events\NewPaymentEvent;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
 use Crm\PaymentsModule\Repository\PaymentsRepository;

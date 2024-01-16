@@ -3,7 +3,7 @@
 namespace Crm\GiftsModule\Components\GiftPaymentItemsListWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
-use Crm\GiftsModule\PaymentItem\GiftPaymentItem;
+use Crm\GiftsModule\Models\PaymentItem\GiftPaymentItem;
 use Nette\Database\Table\ActiveRow;
 
 class GiftPaymentItemsListWidget extends BaseLazyWidget
