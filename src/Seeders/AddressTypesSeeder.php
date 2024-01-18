@@ -3,7 +3,7 @@
 namespace Crm\GiftsModule\Seeders;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Crm\UsersModule\Repository\AddressTypesRepository;
+use Crm\UsersModule\Repositories\AddressTypesRepository;
 use Nette\Localization\Translator;
 use Symfony\Component\Console\Output\OutputInterface;
 

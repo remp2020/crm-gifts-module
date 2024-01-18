@@ -5,7 +5,7 @@ namespace Crm\GiftsModule\DataProviders;
 use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\PaymentsModule\Repository\PaymentMetaRepository;
-use Crm\UsersModule\DataProvider\CanDeleteAddressDataProviderInterface;
+use Crm\UsersModule\DataProviders\CanDeleteAddressDataProviderInterface;
 use Nette\Database\Table\ActiveRow;
 use Nette\Localization\Translator;
 

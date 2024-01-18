@@ -19,8 +19,8 @@ use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
 use Crm\UsersModule\Events\NotificationEvent;
-use Crm\UsersModule\Repository\LoginAttemptsRepository;
-use Crm\UsersModule\Repository\UsersRepository;
+use Crm\UsersModule\Repositories\LoginAttemptsRepository;
+use Crm\UsersModule\Repositories\UsersRepository;
 use Crm\UsersModule\Tests\TestNotificationHandler;
 use League\Event\Emitter;
 

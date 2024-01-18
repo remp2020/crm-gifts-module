@@ -4,7 +4,7 @@ namespace Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\UsersModule\Repository\UsersRepository;
+use Crm\UsersModule\Repositories\UsersRepository;
 use Nette\Database\Table\ActiveRow;
 
 class OrderDonatedSubscriptionInfo extends BaseLazyWidget
