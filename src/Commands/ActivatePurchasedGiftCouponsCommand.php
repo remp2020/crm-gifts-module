@@ -6,7 +6,7 @@ use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\GiftsModule;
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
-use Crm\PaymentsModule\Repository\PaymentMetaRepository;
+use Crm\PaymentsModule\Repositories\PaymentMetaRepository;
 use Crm\ProductsModule\Repositories\OrdersRepository;
 use Crm\ProductsModule\Repositories\ProductPropertiesRepository;
 use Crm\SubscriptionsModule\Models\Extension\ExtensionInterface;

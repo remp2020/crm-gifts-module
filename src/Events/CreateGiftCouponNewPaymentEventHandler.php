@@ -4,8 +4,8 @@ namespace Crm\GiftsModule\Events;
 
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\Events\NewPaymentEvent;
-use Crm\PaymentsModule\Repository\PaymentMetaRepository;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\Repositories\PaymentMetaRepository;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use League\Event\AbstractListener;
 use League\Event\EventInterface;
 use Nette\Utils\DateTime;

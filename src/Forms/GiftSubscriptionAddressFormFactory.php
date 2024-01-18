@@ -4,7 +4,7 @@ namespace Crm\GiftsModule\Forms;
 
 use Contributte\Translation\Translator;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
-use Crm\PaymentsModule\Repository\PaymentMetaRepository;
+use Crm\PaymentsModule\Repositories\PaymentMetaRepository;
 use Crm\UsersModule\Repositories\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repositories\AddressesRepository;
 use Crm\UsersModule\Repositories\CountriesRepository;

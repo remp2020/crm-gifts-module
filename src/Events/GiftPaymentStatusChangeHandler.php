@@ -5,7 +5,7 @@ namespace Crm\GiftsModule\Events;
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
-use Crm\PaymentsModule\Repository\PaymentsRepository;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\UsersModule\Events\NotificationEvent;
 use League\Event\AbstractListener;
 use League\Event\Emitter;
