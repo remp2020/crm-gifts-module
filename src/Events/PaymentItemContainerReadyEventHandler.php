@@ -4,7 +4,7 @@ namespace Crm\GiftsModule\Events;
 
 use Crm\GiftsModule\Models\PaymentItem\GiftPaymentItem;
 use Crm\SalesFunnelModule\Events\PaymentItemContainerReadyEvent;
-use Crm\SubscriptionsModule\PaymentItem\SubscriptionTypePaymentItem;
+use Crm\SubscriptionsModule\Models\PaymentItem\SubscriptionTypePaymentItem;
 use League\Event\AbstractListener;
 use League\Event\EventInterface;
 use Nette\Localization\Translator;
