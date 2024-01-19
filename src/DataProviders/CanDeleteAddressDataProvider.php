@@ -2,7 +2,7 @@
 
 namespace Crm\GiftsModule\DataProviders;
 
-use Crm\ApplicationModule\DataProvider\DataProviderException;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\PaymentsModule\Repositories\PaymentMetaRepository;
 use Crm\UsersModule\DataProviders\CanDeleteAddressDataProviderInterface;

@@ -2,7 +2,7 @@
 
 namespace Crm\GiftsModule\Components\GiftPaymentItemsListWidget;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 use Crm\GiftsModule\Models\PaymentItem\GiftPaymentItem;
 use Nette\Database\Table\ActiveRow;
 

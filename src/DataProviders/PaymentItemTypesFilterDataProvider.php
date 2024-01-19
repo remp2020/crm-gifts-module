@@ -2,7 +2,7 @@
 
 namespace Crm\GiftsModule\DataProviders;
 
-use Crm\ApplicationModule\DataProvider\DataProviderException;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\GiftsModule\Models\PaymentItem\GiftPaymentItem;
 use Crm\PaymentsModule\DataProviders\PaymentItemTypesFilterDataProviderInterface;
 use Nette\Localization\Translator;

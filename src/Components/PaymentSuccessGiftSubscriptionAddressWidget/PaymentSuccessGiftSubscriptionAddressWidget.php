@@ -2,7 +2,7 @@
 
 namespace Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\Models\PaymentItem\GiftPaymentItem;
 use Crm\PaymentsModule\Models\Gateways\BankTransfer;

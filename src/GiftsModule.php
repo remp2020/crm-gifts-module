@@ -1,12 +1,12 @@
 <?php
 namespace Crm\GiftsModule;
 
-use Crm\ApplicationModule\Commands\CommandsContainerInterface;
+use Crm\ApplicationModule\Application\CommandsContainerInterface;
+use Crm\ApplicationModule\Application\Managers\SeederManager;
 use Crm\ApplicationModule\CrmModule;
-use Crm\ApplicationModule\DataProvider\DataProviderManager;
-use Crm\ApplicationModule\Event\LazyEventEmitter;
-use Crm\ApplicationModule\SeederManager;
-use Crm\ApplicationModule\Widget\LazyWidgetManagerInterface;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Models\Event\LazyEventEmitter;
+use Crm\ApplicationModule\Models\Widget\LazyWidgetManagerInterface;
 use Crm\GiftsModule\Commands\ActivatePurchasedGiftCouponsCommand;
 use Crm\GiftsModule\Components\DonatedSubscriptionListingWidget\DonatedSubscriptionListingWidget;
 use Crm\GiftsModule\Components\GiftCoupons\GiftCoupons;

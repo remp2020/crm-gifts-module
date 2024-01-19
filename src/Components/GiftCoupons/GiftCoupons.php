@@ -3,8 +3,8 @@
 namespace Crm\GiftsModule\Components\GiftCoupons;
 
 use Crm\ApplicationModule\Helpers\UserDateHelper;
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
-use Crm\ApplicationModule\Widget\LazyWidgetManager;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Nette\Application\UI\Form;
