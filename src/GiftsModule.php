@@ -14,6 +14,7 @@ use Crm\GiftsModule\Components\GiftPaymentItemsListWidget\GiftPaymentItemsListWi
 use Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo\OrderDonatedSubscriptionInfo;
 use Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget\PaymentSuccessGiftSubscriptionAddressWidget;
 use Crm\GiftsModule\DataProviders\CanDeleteAddressDataProvider;
+use Crm\GiftsModule\DataProviders\SubscriptionFormDataProvider;
 use Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler;
 use Crm\GiftsModule\Events\PaymentItemContainerReadyEventHandler;
 use Crm\GiftsModule\Events\SendWelcomeEmailHandler;
@@ -22,6 +23,7 @@ use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\GiftsModule\Seeders\ConfigsSeeder;
 use Crm\PaymentsModule\Events\NewPaymentEvent;
 use Crm\SalesFunnelModule\Events\PaymentItemContainerReadyEvent;
+use Crm\SubscriptionsModule\DataProviders\SubscriptionFormDataProviderInterface;
 use Crm\SubscriptionsModule\Events\SubscriptionStartsEvent;
 use Crm\UsersModule\Events\UserRegisteredEvent;
 use League\Event\Emitter;
@@ -107,6 +109,11 @@ class GiftsModule extends CrmModule
             'users.dataprovider.address.can_delete',
             $this->getInstance(CanDeleteAddressDataProvider::class),
             200
+        );
+
+        $dataProviderManager->registerDataProvider(
+            SubscriptionFormDataProviderInterface::PATH,
+            $this->getInstance(SubscriptionFormDataProvider::class),
         );
     }
 }

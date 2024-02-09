@@ -69,3 +69,8 @@ data_provider:
     payment_item_types_filter:
         key:
             gift: Gift
+
+    subscription_form:
+        start_time_after_payment:
+            description: "Subscription's start has to be after donation payment's confirmation date: %payment_paid%."
+            error: "Start of subscription is set before donation payment's confirmation date."

@@ -129,6 +129,12 @@ To differentiate gift emails from the regular ones, you need to add a scenario c
 
 You're free to extend the scenario and your own conditions. Read more in the [ScenariosModule] README.
 
+## DataProviders
+
+### SubscriptionFormDataProvider - validation within subscription's update form
+
+`SubscriptionFormDataProvider` was added to validate update of start time for gifted subscriptions against parent payment's `paid_at` date. For accounting reasons, the subscription must not start before the payment confirmation date.
+
 ----
 
 [ProductsModule]: https://github.com/remp2020/crm-products-module/

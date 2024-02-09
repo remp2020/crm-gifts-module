@@ -7,6 +7,7 @@ use Crm\ApplicationModule\Repositories\AuditLogRepository;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
 
@@ -63,5 +64,10 @@ class PaymentGiftCouponsRepository extends Repository
     final public function findByPayment($payment): Selection
     {
         return $this->getTable()->where(['payment_id' => $payment->id]);
+    }
+
+    final public function findBySubscription(ActiveRow $subscription): Selection
+    {
+        return $this->getTable()->where(['subscription_id' => $subscription->id]);
     }
 }

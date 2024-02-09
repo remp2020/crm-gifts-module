@@ -69,3 +69,8 @@ data_provider:
     payment_item_types_filter:
         key:
             gift: Dar
+
+    subscription_form:
+        start_time_after_payment:
+            description: "Předplatné musí začít po datu potvrzení darovací platby (%payment_paid%)."
+            error: "Začátek předplatného je před datem potvrzení darovací platby."
