@@ -4,6 +4,9 @@ namespace Crm\GiftsModule\Events;
 
 use Crm\ApplicationModule\Models\Config\ApplicationConfig;
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
+use Crm\InvoicesModule\Models\Generator\InvoiceGenerationException;
+use Crm\InvoicesModule\Models\Generator\InvoiceGenerator;
+use Crm\InvoicesModule\Models\Generator\PaymentNotInvoiceableException;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\UsersModule\Events\NotificationEvent;
@@ -16,28 +19,20 @@ use Tracy\ILogger;
 
 class GiftPaymentStatusChangeHandler extends AbstractListener
 {
-    private $applicationConfig;
-
-    private $emitter;
-
-    private $paymentGiftCouponsRepository;
-
-    private $sendAttachment = true;
+    private bool $sendAttachment = true;
 
     public function __construct(
-        ApplicationConfig $applicationConfig,
-        Emitter $emitter,
-        PaymentGiftCouponsRepository $paymentGiftCouponsRepository
+        private readonly ApplicationConfig $applicationConfig,
+        private readonly Emitter $emitter,
+        private readonly PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
+        private readonly InvoiceGenerator $invoiceGenerator,
     ) {
-        $this->applicationConfig = $applicationConfig;
-        $this->emitter = $emitter;
-        $this->paymentGiftCouponsRepository = $paymentGiftCouponsRepository;
     }
 
     /*
      * Useful in tests
      */
-    public function disableAttachment()
+    public function disableAttachment(): void
     {
         $this->sendAttachment = false;
     }
@@ -51,7 +46,7 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
         /** @var ActiveRow $payment */
         $payment = $event->getPayment();
 
-        if ($payment->status != PaymentsRepository::STATUS_PAID) {
+        if ($payment->status !== PaymentsRepository::STATUS_PAID) {
             return;
         }
 
@@ -61,6 +56,7 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
             $attachmentName = $this->applicationConfig->get('gift_subscription_coupon_attachment');
             $attachments = [];
             if ($this->sendAttachment) {
+                // attach coupon
                 try {
                     $attachment = file_get_contents($attachmentName);
                     if ($attachment !== false) {
@@ -82,19 +78,34 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
                         ILogger::ERROR
                     );
                 }
+
+                // attach invoice
+                try {
+                    $attachment = $this->invoiceGenerator->renderInvoiceMailAttachment($payment);
+                    if ($attachment) {
+                        $attachments[] =[
+                            'content' => $attachment['content'],
+                            'file' => $attachment['file'],
+                            'mime_type' => 'application/pdf',
+                        ];
+                    }
+                } catch (PaymentNotInvoiceableException $e) {
+                    // Do nothing, no invoice attachment; exception may be raised for valid payments that are not invoiceable
+                } catch (InvoiceGenerationException $e) {
+                    Debugger::log('Unable to attach invoice, error: ' . $e->getMessage(), ILogger::ERROR);
+                }
             }
 
             $this->emitter->emit(new NotificationEvent(
-                $this->emitter,
-                $payment->user,
-                'created_payment_gift_coupon',
-                [
+                emitter: $this->emitter,
+                user: $payment->user,
+                templateCode: 'created_payment_gift_coupon',
+                params: [
                     'variable_symbol' => $payment->variable_symbol,
                     'donated_to_email' => $paymentGiftCoupon->email,
                     'gift_starts_at' => $paymentGiftCoupon->starts_at->format(DATE_RFC3339),
                 ],
-                null,
-                $attachments
+                attachments: $attachments,
             ));
         }
     }
