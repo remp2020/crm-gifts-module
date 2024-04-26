@@ -33,8 +33,8 @@
             <div class="modal-body">
                 <p>
                     <strong>{_gifts.components.gift_coupons.email}:</strong>
-                    {if $user = $users[$giftCoupon->email]}
-                        <a href="{plink :Users:UsersAdmin:show $user->id}" target="_blank">{$user->public_name}</a>
+                    {if $userGiftee = $users[$giftCoupon->email]}
+                        <a href="{plink :Users:UsersAdmin:show $userGiftee->id}" target="_blank">{$userGiftee->public_name}</a>
                     {else}
                         {$giftCoupon->email}
                     {/if}<br>
