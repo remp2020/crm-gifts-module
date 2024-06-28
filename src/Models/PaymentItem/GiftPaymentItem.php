@@ -10,9 +10,9 @@ class GiftPaymentItem implements PaymentItemInterface
 {
     use PaymentItemTrait;
 
-    const TYPE = 'gift';
+    public const TYPE = 'gift';
 
-    private $subscriptionTypeID;
+    private int $subscriptionTypeID;
 
     public function __construct(
         int $subscriptionTypeID,
@@ -57,5 +57,11 @@ class GiftPaymentItem implements PaymentItemInterface
     public function meta(): array
     {
         return [];
+    }
+
+    public function forceVat(int $vat): static
+    {
+        $this->vat = $vat;
+        return $this;
     }
 }
