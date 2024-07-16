@@ -6,26 +6,25 @@ use Crm\PaymentsModule\Models\PaymentItem\PaymentItemInterface;
 use Crm\PaymentsModule\Models\PaymentItem\PaymentItemTrait;
 use Nette\Database\Table\ActiveRow;
 
-class GiftPaymentItem implements PaymentItemInterface
+final class GiftPaymentItem implements PaymentItemInterface
 {
     use PaymentItemTrait;
 
     public const TYPE = 'gift';
 
-    private int $subscriptionTypeID;
-
     public function __construct(
-        int $subscriptionTypeID,
+        private int $subscriptionTypeId,
         float $unitPrice,
         string $name,
         int $vat,
-        int $count = 1
+        int $count = 1,
+        array $meta = [],
     ) {
-        $this->subscriptionTypeID = $subscriptionTypeID;
-        $this->price = $unitPrice;
         $this->name = $name;
+        $this->price = $unitPrice;
         $this->vat = $vat;
         $this->count = $count;
+        $this->meta = $meta;
     }
 
     /**
@@ -33,9 +32,9 @@ class GiftPaymentItem implements PaymentItemInterface
      * @return GiftPaymentItem
      * @throws \Exception Thrown if payment item isn't `gift` payment item type.
      */
-    public static function fromPaymentItem(ActiveRow $paymentItem)
+    public static function fromPaymentItem(ActiveRow $paymentItem): static
     {
-        if ($paymentItem->type != self::TYPE) {
+        if ($paymentItem->type !== self::TYPE) {
             throw new \Exception("Can not load GiftPaymentItem from payment item of different type. Got [{$paymentItem->type}]");
         }
         return new GiftPaymentItem(
@@ -43,25 +42,15 @@ class GiftPaymentItem implements PaymentItemInterface
             $paymentItem->amount,
             $paymentItem->name,
             $paymentItem->vat,
-            $paymentItem->count
+            $paymentItem->count,
+            self::loadMeta($paymentItem),
         );
     }
 
     public function data(): array
     {
         return [
-            'subscription_type_id' => $this->subscriptionTypeID,
+            'subscription_type_id' => $this->subscriptionTypeId,
         ];
-    }
-
-    public function meta(): array
-    {
-        return [];
-    }
-
-    public function forceVat(int $vat): static
-    {
-        $this->vat = $vat;
-        return $this;
     }
 }

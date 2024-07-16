@@ -32,3 +32,6 @@ services:
 	canDeleteAddressDataProvider: Crm\GiftsModule\DataProviders\CanDeleteAddressDataProvider
 	- Crm\GiftsModule\DataProviders\PaymentItemTypesFilterDataProvider
 	subscriptionFormDataProvider: Crm\GiftsModule\DataProviders\SubscriptionFormDataProvider
+	paymentItemContainerFactory:
+		setup:
+			- registerPaymentItemType(Crm\GiftsModule\Models\PaymentItem\GiftPaymentItem)
