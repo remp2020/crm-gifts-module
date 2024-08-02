@@ -3,6 +3,7 @@
 namespace Crm\GiftsModule\Forms;
 
 use Contributte\Translation\Translator;
+use Crm\ApplicationModule\Forms\Controls\CountriesSelectItemsBuilder;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repositories\PaymentMetaRepository;
 use Crm\UsersModule\Repositories\AddressChangeRequestsRepository;
@@ -22,11 +23,12 @@ class GiftSubscriptionAddressFormFactory
     private $payment;
 
     public function __construct(
-        private Translator $translator,
-        private AddressesRepository $addressesRepository,
-        private AddressChangeRequestsRepository $addressChangeRequestsRepository,
-        private CountriesRepository $countriesRepository,
-        private PaymentMetaRepository $paymentMetaRepository
+        private readonly Translator $translator,
+        private readonly AddressesRepository $addressesRepository,
+        private readonly AddressChangeRequestsRepository $addressChangeRequestsRepository,
+        private readonly CountriesRepository $countriesRepository,
+        private readonly PaymentMetaRepository $paymentMetaRepository,
+        private readonly CountriesSelectItemsBuilder $countriesSelectItemsBuilder,
     ) {
     }
 
@@ -63,7 +65,7 @@ class GiftSubscriptionAddressFormFactory
             ->setRequired('gifts.components.gift_subscription_address.form.required.zip');
         $form->addText('city', 'gifts.components.gift_subscription_address.form.label.city')
             ->setRequired('gifts.components.gift_subscription_address.form.required.city');
-        $form->addSelect('country_id', 'gifts.components.gift_subscription_address.form.label.country_id', $this->countriesRepository->getDefaultCountryPair())
+        $form->addSelect('country_id', 'gifts.components.gift_subscription_address.form.label.country_id', $this->countriesSelectItemsBuilder->getDefaultCountryPair())
             ->setRequired('gifts.components.gift_subscription_address.form.required.country_id');
 
         $form->addHidden('VS', $payment->variable_symbol);
