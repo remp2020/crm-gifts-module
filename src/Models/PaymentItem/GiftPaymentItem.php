@@ -19,6 +19,7 @@ final class GiftPaymentItem implements PaymentItemInterface
         int $vat,
         int $count = 1,
         array $meta = [],
+        private ?int $subscriptionTypeItemId = null,
     ) {
         $this->name = $name;
         $this->price = $unitPrice;
@@ -44,6 +45,7 @@ final class GiftPaymentItem implements PaymentItemInterface
             $paymentItem->vat,
             $paymentItem->count,
             self::loadMeta($paymentItem),
+            $paymentItem->subscription_type_item_id,
         );
     }
 
@@ -51,6 +53,7 @@ final class GiftPaymentItem implements PaymentItemInterface
     {
         return [
             'subscription_type_id' => $this->subscriptionTypeId,
+            'subscription_type_item_id' => $this->subscriptionTypeItemId,
         ];
     }
 }

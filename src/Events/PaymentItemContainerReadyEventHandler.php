@@ -11,12 +11,9 @@ use Nette\Localization\Translator;
 
 class PaymentItemContainerReadyEventHandler extends AbstractListener
 {
-    private $translator;
-
     public function __construct(
-        Translator $translator
+        private Translator $translator
     ) {
-        $this->translator = $translator;
     }
 
     public function handle(EventInterface $event)
@@ -51,12 +48,14 @@ class PaymentItemContainerReadyEventHandler extends AbstractListener
         $paymentItemContainer = $event->getPaymentItemContainer();
         foreach ($paymentItemContainer->items() as $key => $paymentItem) {
             if ($paymentItem->type() === SubscriptionTypePaymentItem::TYPE) {
+                $data = $paymentItem->data();
                 $paymentItemContainer->switchItem($key, $paymentItem, new GiftPaymentItem(
-                    $paymentItem->data()['subscription_type_id'],
+                    $data['subscription_type_id'],
                     $paymentItem->unitPrice(),
                     $this->translator->translate('gifts.gift_payment_item.prefix') . $paymentItem->name(),
                     $paymentItem->vat(),
-                    $paymentItem->count()
+                    $paymentItem->count(),
+                    $data['subscription_type_item_id'] ?? null,
                 ));
             }
         }
