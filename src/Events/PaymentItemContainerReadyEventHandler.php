@@ -50,12 +50,13 @@ class PaymentItemContainerReadyEventHandler extends AbstractListener
             if ($paymentItem->type() === SubscriptionTypePaymentItem::TYPE) {
                 $data = $paymentItem->data();
                 $paymentItemContainer->switchItem($key, $paymentItem, new GiftPaymentItem(
-                    $data['subscription_type_id'],
-                    $paymentItem->unitPrice(),
-                    $this->translator->translate('gifts.gift_payment_item.prefix') . $paymentItem->name(),
-                    $paymentItem->vat(),
-                    $paymentItem->count(),
-                    $data['subscription_type_item_id'] ?? null,
+                    subscriptionTypeId: $data['subscription_type_id'],
+                    unitPrice: $paymentItem->unitPrice(),
+                    name: $this->translator->translate('gifts.gift_payment_item.prefix') . $paymentItem->name(),
+                    vat: $paymentItem->vat(),
+                    count: $paymentItem->count(),
+                    meta: [],
+                    subscriptionTypeItemId: $data['subscription_type_item_id'] ?? null,
                 ));
             }
         }
