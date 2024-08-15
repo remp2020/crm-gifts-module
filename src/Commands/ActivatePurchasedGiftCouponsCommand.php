@@ -27,56 +27,22 @@ use Tracy\ILogger;
 
 class ActivatePurchasedGiftCouponsCommand extends Command
 {
-    private $addressesRepository;
-
-    private $addressChangeRequestsRepository;
-
-    private $subscriptionsRepository;
-
-    private $usersRepository;
-
-    private $paymentGiftCouponsRepository;
-
-    private $userManager;
-
-    private $paymentMetaRepository;
-
-    private $productPropertiesRepository;
-
-    private $subscriptionTypesRepository;
-
-    private $ordersRepository;
-
-    /** @var ExtensionInterface */
-    private $extender;
-
-    private $extensionMethodFactory;
+    private ExtensionInterface $extender;
 
     public function __construct(
-        AddressesRepository $addressesRepository,
-        AddressChangeRequestsRepository $addressChangeRequestsRepository,
-        SubscriptionsRepository $subscriptionsRepository,
-        SubscriptionTypesRepository $subscriptionTypesRepository,
-        UsersRepository $usersRepository,
-        UserManager $userManager,
-        ProductPropertiesRepository $productPropertiesRepository,
-        PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
-        PaymentMetaRepository $paymentMetaRepository,
-        OrdersRepository $ordersRepository,
-        ExtensionMethodFactory $extensionMethodFactory
+        private readonly AddressesRepository $addressesRepository,
+        private readonly AddressChangeRequestsRepository $addressChangeRequestsRepository,
+        private readonly SubscriptionsRepository $subscriptionsRepository,
+        private readonly SubscriptionTypesRepository $subscriptionTypesRepository,
+        private readonly UsersRepository $usersRepository,
+        private readonly UserManager $userManager,
+        private readonly ProductPropertiesRepository $productPropertiesRepository,
+        private readonly PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
+        private readonly PaymentMetaRepository $paymentMetaRepository,
+        private readonly OrdersRepository $ordersRepository,
+        private readonly ExtensionMethodFactory $extensionMethodFactory,
     ) {
         parent::__construct();
-        $this->addressesRepository = $addressesRepository;
-        $this->addressChangeRequestsRepository = $addressChangeRequestsRepository;
-        $this->subscriptionsRepository = $subscriptionsRepository;
-        $this->usersRepository = $usersRepository;
-        $this->paymentGiftCouponsRepository = $paymentGiftCouponsRepository;
-        $this->userManager = $userManager;
-        $this->productPropertiesRepository = $productPropertiesRepository;
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->paymentMetaRepository = $paymentMetaRepository;
-        $this->ordersRepository = $ordersRepository;
-        $this->extensionMethodFactory = $extensionMethodFactory;
     }
 
     protected function configure()
@@ -244,9 +210,11 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         }
 
         if ($address) {
+            $defaultAddress = $this->addressesRepository->address($user, 'print', true);
             $this->addressesRepository->update($address, [
                 'user_id' => $user->id,
                 'type' => 'print',
+                'is_default' => !$defaultAddress,
             ]);
 
             $changeRequests = $this->addressChangeRequestsRepository->getTable()
