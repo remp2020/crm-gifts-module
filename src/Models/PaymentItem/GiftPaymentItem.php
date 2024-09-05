@@ -16,7 +16,7 @@ final class GiftPaymentItem implements PaymentItemInterface
         private int $subscriptionTypeId,
         float $unitPrice,
         string $name,
-        int $vat,
+        float $vat,
         int $count = 1,
         array $meta = [],
         private ?int $subscriptionTypeItemId = null,
