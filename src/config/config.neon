@@ -35,3 +35,11 @@ services:
 	paymentItemContainerFactory:
 		setup:
 			- registerPaymentItemType(Crm\GiftsModule\Models\PaymentItem\GiftPaymentItem)
+
+	sendGiftDonorNotificationEmailGenericEvent:
+		factory: Crm\GiftsModule\Scenarios\SendNotificationEmailToDonorGenericEvent
+		setup:
+			- addAllowedMailTypeCodes('system', 'system_optional')
+	scenariosGenericEventsManager:
+		setup:
+			- register('send_notification_email_to_gift_donor', @sendGiftDonorNotificationEmailGenericEvent)
