@@ -56,4 +56,14 @@ final class GiftPaymentItem implements PaymentItemInterface
             'subscription_type_item_id' => $this->subscriptionTypeItemId,
         ];
     }
+
+    public function getSubscriptionTypeId(): int
+    {
+        return $this->subscriptionTypeId;
+    }
+
+    public function getSubscriptionTypeItemId(): ?int
+    {
+        return $this->subscriptionTypeItemId;
+    }
 }
