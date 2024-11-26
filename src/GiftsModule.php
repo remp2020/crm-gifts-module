@@ -11,6 +11,7 @@ use Crm\GiftsModule\Commands\ActivatePurchasedGiftCouponsCommand;
 use Crm\GiftsModule\Components\DonatedSubscriptionListingWidget\DonatedSubscriptionListingWidget;
 use Crm\GiftsModule\Components\GiftCoupons\GiftCoupons;
 use Crm\GiftsModule\Components\GiftPaymentItemsListWidget\GiftPaymentItemsListWidget;
+use Crm\GiftsModule\Components\GiftSubscriptionAdminButtonWidget\GiftSubscriptionAdminButtonWidget;
 use Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo\OrderDonatedSubscriptionInfo;
 use Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget\PaymentSuccessGiftSubscriptionAddressWidget;
 use Crm\GiftsModule\DataProviders\CanDeleteAddressDataProvider;
@@ -69,37 +70,43 @@ class GiftsModule extends CrmModule
         $seederManager->addSeeder($this->getInstance(ConfigsSeeder::class));
     }
 
-    public function registerLazyWidgets(LazyWidgetManagerInterface $widgetManager)
+    public function registerLazyWidgets(LazyWidgetManagerInterface $lazyWidgetManager)
     {
-        $widgetManager->registerWidget(
+        $lazyWidgetManager->registerWidget(
             'admin.payments.listing.action',
             GiftCoupons::class,
             400
         );
 
-        $widgetManager->registerWidget(
+        $lazyWidgetManager->registerWidget(
             'payment.address',
             PaymentSuccessGiftSubscriptionAddressWidget::class
         );
 
-        $widgetManager->registerWidget(
+        $lazyWidgetManager->registerWidget(
             'payments.admin.payment_item_listing',
             GiftPaymentItemsListWidget::class
         );
 
-        $widgetManager->registerWidget(
+        $lazyWidgetManager->registerWidget(
             'subscriptions.admin.user_subscriptions_listing.subscription',
             DonatedSubscriptionListingWidget::class
         );
 
-        $widgetManager->registerWidget(
+        $lazyWidgetManager->registerWidget(
             'admin.products.order.right_column',
             OrderDonatedSubscriptionInfo::class
         );
 
-        $widgetManager->registerWidget(
+        $lazyWidgetManager->registerWidget(
             'orders.listing.payment_actions',
             GiftCoupons::class
+        );
+
+        $lazyWidgetManager->registerWidget(
+            'admin.user.detail.box',
+            GiftSubscriptionAdminButtonWidget::class,
+            320,
         );
     }
 

@@ -15,6 +15,7 @@ services:
 	- Crm\GiftsModule\Components\GiftCoupons\GiftCoupons
 	- Crm\GiftsModule\Components\DonatedSubscriptionListingWidget\DonatedSubscriptionListingWidget
 	- Crm\GiftsModule\Components\GiftPaymentItemsListWidget\GiftPaymentItemsListWidget
+	- Crm\GiftsModule\Components\GiftSubscriptionAdminButtonWidget\GiftSubscriptionAdminButtonWidget
 	- Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget\PaymentSuccessGiftSubscriptionAddressWidget
 	- Crm\GiftsModule\Components\OrderDonatedSubscriptionInfo\OrderDonatedSubscriptionInfo
 
@@ -25,6 +26,7 @@ services:
 	- Crm\GiftsModule\Events\SubscriptionsStartsEventHandler
 
 	- Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory
+	- Crm\GiftsModule\Forms\GiftFormFactory
 
 	- Crm\GiftsModule\Seeders\AddressTypesSeeder
 	- Crm\GiftsModule\Seeders\ConfigsSeeder

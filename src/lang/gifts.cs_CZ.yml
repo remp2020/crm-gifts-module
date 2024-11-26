@@ -54,6 +54,10 @@ components:
                 city: Musíte zadat město
                 country_id: Musíte vybrat zemi
 
+    gift_subscription_admin_button_widget:
+        header: Dárkové předplatné
+        add_gift_payment: Přidej dárkovou platbu
+
 gift_payment_item:
     prefix: "Dárkové předplatné: "
 
@@ -74,3 +78,25 @@ data_provider:
         start_time_after_payment:
             description: "Předplatné musí začít po datu potvrzení darovací platby (%payment_paid%)."
             error: "Začátek předplatného je před datem potvrzení darovací platby."
+
+forms:
+    gift_form:
+        errors:
+            unable_to_create_payment_one_stop_shop: "Platbu nie je možné vykonať z dôvodu konfliktu zvolených krajín (fakturačná krajina, krajina doručenia)."
+        payment_gateway:
+            label: Platební brána
+        subscription_type:
+            label: Typ předplatného
+        gift_email:
+            label: E-mail obdarovaného
+            description: Na tento e-mail aktivujeme předplatné po zaplacení platby
+            placeholder: "@"
+        gift_starts_at:
+            label: Datum aktivace
+            description: "Den a čas, kdy má začít předplatné"
+        address:
+            label: Adresa
+            description: "Lze vybrat pouze adresu typu: %addressType%. Vybraná adresa se po aktivaci předplatného přesune na konto obdarovaného. Pokud adresa nebude přidělena a předplatné obsahuje tisk, vyžádáme si ji od obdarovaného v jeho kontě po aktivaci předplatného."
+        note:
+            label: Poznámka
+            placeholder: Interní poznámka k platbě

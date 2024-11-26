@@ -54,6 +54,10 @@ components:
                 city: You must select a city
                 country_id: You must select the country
 
+    gift_subscription_admin_button_widget:
+        header: Gift subscription
+        add_gift_payment: Add gift payment
+
 gift_payment_item:
     prefix: "Gift subscription: "
 
@@ -74,3 +78,25 @@ data_provider:
         start_time_after_payment:
             description: "Subscription's start has to be after donation payment's confirmation date: %payment_paid%."
             error: "Start of subscription is set before donation payment's confirmation date."
+
+forms:
+    gift_form:
+        errors:
+            unable_to_create_payment_one_stop_shop: "Payment cannot be created due to conflict in selected countries (billing country, delivery country)."
+        payment_gateway:
+            label: Payment gateway
+        subscription_type:
+            label: Subscription type
+        gift_email:
+            label: E-mail of giftee
+            description: We will activate the subscription to this email after payment is made.
+            placeholder: "@"
+        gift_starts_at:
+            label: Date of activation
+            description: "The day and time the subscription should start"
+        address:
+            label: Address
+            description: "Only addresses of the type: %addressType%. The selected address will be transferred to the giftee's account after the subscription is activated. If the address is not assigned and the subscription includes access to print, we will request it from the giftee in their account after the subscription is activated."
+        note:
+            label: Note
+            placeholder: Internal payment note
