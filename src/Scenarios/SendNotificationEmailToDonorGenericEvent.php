@@ -4,7 +4,6 @@ namespace Crm\GiftsModule\Scenarios;
 
 use Crm\ApplicationModule\Models\Config\ApplicationConfig;
 use Crm\ApplicationModule\Models\Criteria\ScenarioParams\StringLabeledArrayParam;
-use Crm\ApplicationModule\Models\Database\ActiveRowFactory;
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\Models\RecurrentPaymentsResolver;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
@@ -31,7 +30,6 @@ class SendNotificationEmailToDonorGenericEvent implements ScenarioGenericEventIn
         private readonly Emitter $emitter,
         private readonly MailTemplatesRepository $mailTemplatesRepository,
         private readonly AddressesRepository $addressesRepository,
-        private readonly ActiveRowFactory $activeRowFactory,
         private readonly SubscriptionsRepository $subscriptionsRepository,
         private readonly RecurrentPaymentsRepository $recurrentPaymentsRepository,
         private readonly PaymentsRepository $paymentsRepository,
