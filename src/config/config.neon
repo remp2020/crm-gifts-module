@@ -36,10 +36,14 @@ services:
 		setup:
 			- registerPaymentItemType(Crm\GiftsModule\Models\PaymentItem\GiftPaymentItem)
 
-	sendGiftDonorNotificationEmailGenericEvent:
-		factory: Crm\GiftsModule\Scenarios\SendNotificationEmailToDonorGenericEvent
-		setup:
-			- addAllowedMailTypeCodes('system', 'system_optional')
-	scenariosGenericEventsManager:
-		setup:
-			- register('send_notification_email_to_gift_donor', @sendGiftDonorNotificationEmailGenericEvent)
+	# Following is conditionally registered directly in the GiftsModuleExtension. It has direct REMP Mailer dependency
+	# and it wouldn't work without the module. The service is registered only when REMP Mailer module is installed.
+	# We keep it here just so you know where to look for it.
+
+#	sendGiftDonorNotificationEmailGenericEvent:
+#		factory: Crm\GiftsModule\Scenarios\SendNotificationEmailToDonorGenericEvent
+#		setup:
+#			- addAllowedMailTypeCodes('system', 'system_optional')
+#	scenariosGenericEventsManager:
+#		setup:
+#			- register('send_notification_email_to_gift_donor', @sendGiftDonorNotificationEmailGenericEvent)
