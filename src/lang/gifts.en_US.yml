@@ -69,6 +69,12 @@ admin:
     address:
         cant_delete: 'This address is used in gift subscription.'
 
+    gifts:
+        new:
+            title: New gift payment
+            header: 'New gift payment for %name%'
+            back: back to user
+
 data_provider:
     payment_item_types_filter:
         key:

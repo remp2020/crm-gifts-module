@@ -69,6 +69,12 @@ admin:
     address:
         cant_delete: 'Tato adresa se používá pro darované předplatné.'
 
+    gifts:
+        new:
+            title: Nová dárková platba
+            header: 'Nová dárková platba pro %name%'
+            back: zpět na uživatele
+
 data_provider:
     payment_item_types_filter:
         key:
