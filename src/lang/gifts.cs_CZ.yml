@@ -99,4 +99,4 @@ forms:
             description: "Lze vybrat pouze adresu typu: %addressType%. Vybraná adresa se po aktivaci předplatného přesune na konto obdarovaného. Pokud adresa nebude přidělena a předplatné obsahuje tisk, vyžádáme si ji od obdarovaného v jeho kontě po aktivaci předplatného."
         note:
             label: Poznámka
-            placeholder: Interní poznámka k platbě
+            placeholder: Důvod vzniku dárkové platby přes administraci

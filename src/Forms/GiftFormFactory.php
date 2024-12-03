@@ -21,6 +21,7 @@ use Crm\UsersModule\Repositories\UsersRepository;
 use League\Event\Emitter;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
+use Nette\Security\User;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 
@@ -41,6 +42,7 @@ class GiftFormFactory
         private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder,
         private readonly Translator $translator,
         private readonly UsersRepository $usersRepository,
+        private User $user,
     ) {
     }
 
@@ -95,6 +97,7 @@ class GiftFormFactory
         ;
 
         $form->addTextArea('note', 'gifts.forms.gift_form.note.label')
+            ->setRequired() // GDPR reasons: we should have email / phone record in case new account will be created
             ->setHtmlAttribute('placeholder', 'gifts.forms.gift_form.note.placeholder')
             ->getControlPrototype()
             ->addAttributes(['class' => 'autosize']);
@@ -115,7 +118,7 @@ class GiftFormFactory
     {
         $paymentGateway = $this->paymentGatewaysRepository->find($values['payment_gateway_id']);
         $subscriptionType = $this->subscriptionTypesRepository->find($values['subscription_type_id']);
-        $user = $this->usersRepository->find($values['user_id']);
+        $donorUser = $this->usersRepository->find($values['user_id']);
 
         $address = null;
         if ($values->address_id) {
@@ -128,6 +131,9 @@ class GiftFormFactory
             'gift' => true,
             'gift_email' => $values['gift_email'],
             'gift_starts_at' => $giftStartsAt->format(\DateTimeInterface::RFC3339),
+            // logging who added gift payment directly to payment meta
+            // (GDPR reasons: we should have email / phone record in case new account will be created)
+            'created_by_user_id' => $this->user->id,
         ];
 
         $paymentItemContainer = (new PaymentItemContainer())
@@ -136,14 +142,14 @@ class GiftFormFactory
         // let GiftsModule\..\PaymentItemContainerReadyEventHandler update payment container as needed
         $this->emitter->emit(new PaymentItemContainerReadyEvent(
             $paymentItemContainer,
-            $user,
+            $donorUser,
             $paymentMetaData,
         ));
 
         $resolvedCountry = null;
         try {
             $resolvedCountry = $this->oneStopShop->resolveCountry(
-                user: $user,
+                user: $donorUser,
                 paymentAddress: $address,
                 paymentItemContainer: $paymentItemContainer,
             );
@@ -155,12 +161,13 @@ class GiftFormFactory
         $payment = $this->paymentsRepository->add(
             subscriptionType: $subscriptionType,
             paymentGateway: $paymentGateway,
-            user: $user,
+            user: $donorUser,
             paymentItemContainer: $paymentItemContainer,
             address: $address,
             metaData: $paymentMetaData,
             paymentCountry: $resolvedCountry?->country,
             paymentCountryResolutionReason: $resolvedCountry?->getReasonValue(),
+            note: $values['note'],
         );
 
         $this->onSave->__invoke($payment);

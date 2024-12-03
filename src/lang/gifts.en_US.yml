@@ -99,4 +99,4 @@ forms:
             description: "Only addresses of the type: %addressType%. The selected address will be transferred to the giftee's account after the subscription is activated. If the address is not assigned and the subscription includes access to print, we will request it from the giftee in their account after the subscription is activated."
         note:
             label: Note
-            placeholder: Internal payment note
+            placeholder: Reason for creating a gift payment through administration
