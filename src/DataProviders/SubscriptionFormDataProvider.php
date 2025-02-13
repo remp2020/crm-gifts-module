@@ -4,11 +4,11 @@ namespace Crm\GiftsModule\DataProviders;
 
 use Crm\ApplicationModule\Helpers\UserDateHelper;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
+use Crm\ApplicationModule\UI\Form;
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionFormDataProviderInterface;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
-use Nette\Application\UI\Form;
 use Nette\Forms\Controls\TextInput;
 use Nette\Localization\Translator;
 use Nette\Utils\DateTime;

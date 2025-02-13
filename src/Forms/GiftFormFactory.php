@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Crm\GiftsModule\Forms;
 
 use Contributte\Translation\Translator;
+use Crm\ApplicationModule\UI\Form;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Forms\Controls\SubscriptionTypesSelectItemsBuilder;
 use Crm\PaymentsModule\Models\OneStopShop\OneStopShop;
@@ -19,7 +20,6 @@ use Crm\UsersModule\Forms\Controls\AddressesSelectItemsBuilder;
 use Crm\UsersModule\Repositories\AddressesRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
 use League\Event\Emitter;
-use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Nette\Security\User;
 use Nette\Utils\DateTime;

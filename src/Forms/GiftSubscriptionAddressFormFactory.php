@@ -4,12 +4,12 @@ namespace Crm\GiftsModule\Forms;
 
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Forms\Controls\CountriesSelectItemsBuilder;
+use Crm\ApplicationModule\UI\Form;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repositories\PaymentMetaRepository;
 use Crm\UsersModule\Repositories\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repositories\AddressesRepository;
 use Crm\UsersModule\Repositories\CountriesRepository;
-use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\ArrayHash;
 use Tomaj\Form\Renderer\BootstrapRenderer;
