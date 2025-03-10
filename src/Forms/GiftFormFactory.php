@@ -143,7 +143,7 @@ class GiftFormFactory
         $this->emitter->emit(new PaymentItemContainerReadyEvent(
             $paymentItemContainer,
             $donorUser,
-            $paymentMetaData,
+            ['payment_metadata' => $paymentMetaData],
         ));
 
         $resolvedCountry = null;
