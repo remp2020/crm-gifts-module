@@ -39,7 +39,7 @@ components:
                 name: Name
                 last_name: Last name
                 phone_number: Phone number
-                address: Street
+                street: Street
                 number: Number
                 zip: ZIP
                 city: City
@@ -48,7 +48,7 @@ components:
             required:
                 name: You must fill in your name
                 last_name: You must fill in your last name
-                address: You must fill the street
+                street: You must fill the street
                 number: You must fill the house number
                 zip: You must fill a zip code
                 city: You must select a city

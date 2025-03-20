@@ -57,8 +57,8 @@ class GiftSubscriptionAddressFormFactory
         $form->addText('last_name', 'gifts.components.gift_subscription_address.form.label.last_name')
             ->setRequired('gifts.components.gift_subscription_address.form.required.last_name');
         $form->addText('phone_number', 'gifts.components.gift_subscription_address.form.label.phone_number');
-        $form->addText('address', 'gifts.components.gift_subscription_address.form.label.address')
-            ->setRequired('gifts.components.gift_subscription_address.form.required.address');
+        $form->addText('street', 'gifts.components.gift_subscription_address.form.label.street')
+            ->setRequired('gifts.components.gift_subscription_address.form.required.street');
         $form->addText('number', 'gifts.components.gift_subscription_address.form.label.number')
             ->setRequired('gifts.components.gift_subscription_address.form.required.number');
         $form->addText('zip', 'gifts.components.gift_subscription_address.form.label.zip')
@@ -113,7 +113,7 @@ class GiftSubscriptionAddressFormFactory
                 $values->first_name,
                 $values->last_name,
                 null,
-                $values->address,
+                $values->street,
                 $values->number,
                 $values->city,
                 $values->zip,

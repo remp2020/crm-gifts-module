@@ -39,7 +39,7 @@ components:
                 name: Jméno
                 last_name: Příjmení
                 phone_number: Tel. číslo
-                address: Ulice
+                street: Ulice
                 number: Číslo domu
                 zip: PSČ
                 city: Město
@@ -48,7 +48,7 @@ components:
             required:
                 name: Musíte vyplnit Vaše jméno
                 last_name: Musíte vyplnit Vaše příjmení
-                address: Musíte zadat ulici
+                street: Musíte zadat ulici
                 number: Musíte zadat číslo domu
                 zip: Musíte zadať PSČ
                 city: Musíte zadat město
