@@ -48,10 +48,6 @@ class ActivatePurchasedGiftCouponsCommand extends Command
     protected function configure()
     {
         $this->setName('gifts:activate_purchased_gift_coupons')
-            ->setAliases([
-                // DEPRECATED: remove `products:activate_purchased_gift_coupons` command alias
-                'products:activate_purchased_gift_coupons'
-                ])
             ->setDescription('Activates all gift coupons (and creates accounts) purchased via shop');
     }
 
