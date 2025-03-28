@@ -4,6 +4,7 @@ namespace Crm\GiftsModule\DI;
 
 use Contributte\Translation\DI\TranslationProviderInterface;
 use Crm\GiftsModule\Scenarios\SendNotificationEmailToDonorGenericEvent;
+use Crm\RempMailerModule\Repositories\MailTemplatesRepository;
 use Nette\Application\IPresenterFactory;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
@@ -29,7 +30,7 @@ class GiftsModuleExtension extends CompilerExtension implements TranslationProvi
         //
         // This should ideally be independent of REMP Mailer and scenario module should be responsible for providing
         // list of available mail templates from the service it supports.
-        $hasMailTemplatesRepository = $builder->getByType(\Crm\RempMailerModule\Repositories\MailTemplatesRepository::class) !== null;
+        $hasMailTemplatesRepository = $builder->getByType(MailTemplatesRepository::class) !== null;
         if ($hasMailTemplatesRepository) {
             // register generic handler to DI
             $definition = new ServiceDefinition();
