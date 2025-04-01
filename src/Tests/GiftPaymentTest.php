@@ -4,6 +4,7 @@ namespace Crm\GiftsModule\Tests;
 
 use Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
+use Crm\PaymentsModule\Models\Payment\PaymentStatusEnum;
 use Crm\PaymentsModule\Models\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repositories\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
@@ -103,7 +104,7 @@ class GiftPaymentTest extends BaseTestCase
             ]
         );
 
-        $this->paymentsRepository->updateStatus($payment, PaymentsRepository::STATUS_PAID);
+        $this->paymentsRepository->updateStatus($payment, PaymentStatusEnum::Paid->value);
         $this->paymentsRepository->update($payment, ['paid_at' => new DateTime()]);
         return $this->paymentsRepository->find($payment->id);
     }

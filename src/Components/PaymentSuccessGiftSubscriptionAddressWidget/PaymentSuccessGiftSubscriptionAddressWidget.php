@@ -6,8 +6,8 @@ use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\Models\PaymentItem\GiftPaymentItem;
 use Crm\PaymentsModule\Models\Gateways\BankTransfer;
+use Crm\PaymentsModule\Models\Payment\PaymentStatusEnum;
 use Crm\PaymentsModule\Models\PaymentAwareInterface;
-use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Nette\Database\Table\ActiveRow;
 
 class PaymentSuccessGiftSubscriptionAddressWidget extends BaseLazyWidget
@@ -25,7 +25,7 @@ class PaymentSuccessGiftSubscriptionAddressWidget extends BaseLazyWidget
     public function render()
     {
         $payment = $this->getPayment();
-        if ($payment->status !== PaymentsRepository::STATUS_PAID && $payment->payment_gateway->code !== BankTransfer::GATEWAY_CODE) {
+        if ($payment->status !== PaymentStatusEnum::Paid->value && $payment->payment_gateway->code !== BankTransfer::GATEWAY_CODE) {
             return;
         }
 

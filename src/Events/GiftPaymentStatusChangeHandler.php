@@ -8,7 +8,7 @@ use Crm\InvoicesModule\Models\Generator\InvoiceGenerationException;
 use Crm\InvoicesModule\Models\Generator\InvoiceGenerator;
 use Crm\InvoicesModule\Models\Generator\PaymentNotInvoiceableException;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
-use Crm\PaymentsModule\Repositories\PaymentsRepository;
+use Crm\PaymentsModule\Models\Payment\PaymentStatusEnum;
 use Crm\UsersModule\Events\NotificationEvent;
 use League\Event\AbstractListener;
 use League\Event\Emitter;
@@ -46,7 +46,7 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
         /** @var ActiveRow $payment */
         $payment = $event->getPayment();
 
-        if ($payment->status !== PaymentsRepository::STATUS_PAID) {
+        if ($payment->status !== PaymentStatusEnum::Paid->value) {
             return;
         }
 
