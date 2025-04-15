@@ -12,7 +12,8 @@ class GiftCouponActivatedEvent extends AbstractEvent implements SubscriptionEven
     public function __construct(
         private readonly ActiveRow $coupon,
         private readonly ActiveRow $subscription,
-    ){}
+    ) {
+    }
 
     public function getCoupon(): ActiveRow
     {
