@@ -2,6 +2,7 @@
 
 namespace Crm\GiftsModule\Commands;
 
+use Crm\GiftsModule\Events\GiftCouponActivatedEvent;
 use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\GiftsModule;
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
@@ -17,6 +18,7 @@ use Crm\UsersModule\Models\Auth\UserManager;
 use Crm\UsersModule\Repositories\AddressChangeRequestsRepository;
 use Crm\UsersModule\Repositories\AddressesRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
+use League\Event\Emitter;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;
@@ -41,6 +43,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         private readonly PaymentMetaRepository $paymentMetaRepository,
         private readonly OrdersRepository $ordersRepository,
         private readonly ExtensionMethodFactory $extensionMethodFactory,
+        private readonly Emitter $emitter,
     ) {
         parent::__construct();
     }
@@ -160,6 +163,8 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         if ($order) {
             $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_DELIVERED]);
         }
+
+        $this->emitter->emit(new GiftCouponActivatedEvent($coupon, $subscription));
 
         $output->writeln("Subscription <info>{$subscriptionType->name}</info> - created\n");
 

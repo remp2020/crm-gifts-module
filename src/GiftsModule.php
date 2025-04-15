@@ -5,6 +5,7 @@ use Crm\ApplicationModule\Application\CommandsContainerInterface;
 use Crm\ApplicationModule\Application\Managers\SeederManager;
 use Crm\ApplicationModule\CrmModule;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Models\Event\EventsStorage;
 use Crm\ApplicationModule\Models\Event\LazyEventEmitter;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManagerInterface;
 use Crm\GiftsModule\Commands\ActivatePurchasedGiftCouponsCommand;
@@ -17,6 +18,7 @@ use Crm\GiftsModule\Components\PaymentSuccessGiftSubscriptionAddressWidget\Payme
 use Crm\GiftsModule\DataProviders\CanDeleteAddressDataProvider;
 use Crm\GiftsModule\DataProviders\SubscriptionFormDataProvider;
 use Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler;
+use Crm\GiftsModule\Events\GiftCouponActivatedEvent;
 use Crm\GiftsModule\Events\PaymentItemContainerReadyEventHandler;
 use Crm\GiftsModule\Events\SendWelcomeEmailHandler;
 use Crm\GiftsModule\Events\SubscriptionsStartsEventHandler;
@@ -38,6 +40,11 @@ class GiftsModule extends CrmModule
         $commandsContainer->registerCommand(
             $this->getInstance(ActivatePurchasedGiftCouponsCommand::class)
         );
+    }
+
+    public function registerEvents(EventsStorage $eventsStorage)
+    {
+        $eventsStorage->register('gift-coupon-activated', GiftCouponActivatedEvent::class);
     }
 
     public function registerLazyEventHandlers(LazyEventEmitter $emitter)
