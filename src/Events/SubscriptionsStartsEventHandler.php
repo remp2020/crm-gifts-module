@@ -15,7 +15,7 @@ class SubscriptionsStartsEventHandler extends AbstractListener
     private $emitter;
 
     public function __construct(
-        Emitter $emitter
+        Emitter $emitter,
     ) {
         $this->emitter = $emitter;
     }
@@ -42,7 +42,7 @@ class SubscriptionsStartsEventHandler extends AbstractListener
             $subscription->user,
             'new_subscription_gift',
             [],
-            "new_subscription.{$subscription->id}"
+            "new_subscription.{$subscription->id}",
         ));
     }
 }

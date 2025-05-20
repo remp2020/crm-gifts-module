@@ -49,7 +49,7 @@ abstract class BaseTestCase extends DatabaseTestCase
             RecurrentPaymentsRepository::class,
             // Content access
             ContentAccessRepository::class,
-            SubscriptionTypeContentAccessRepository::class
+            SubscriptionTypeContentAccessRepository::class,
         ];
     }
 
@@ -58,7 +58,7 @@ abstract class BaseTestCase extends DatabaseTestCase
         return [
             SubscriptionExtensionMethodsSeeder::class,
             SubscriptionLengthMethodSeeder::class,
-            SubscriptionTypeNamesSeeder::class
+            SubscriptionTypeNamesSeeder::class,
         ];
     }
 

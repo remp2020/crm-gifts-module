@@ -14,7 +14,7 @@ class SendWelcomeEmailHandler extends AbstractListener
     private $emitter;
 
     public function __construct(
-        Emitter $emitter
+        Emitter $emitter,
     ) {
         $this->emitter = $emitter;
     }
@@ -41,7 +41,7 @@ class SendWelcomeEmailHandler extends AbstractListener
                 'email' => $user->email,
                 'password' => $event->getOriginalPassword(),
             ],
-            "registration.welcome_email.{$user->id}"
+            "registration.welcome_email.{$user->id}",
         ));
     }
 }

@@ -15,7 +15,7 @@ class OrderDonatedSubscriptionInfo extends BaseLazyWidget
 
     public function __construct(
         LazyWidgetManager $lazyWidgetManager,
-        UsersRepository $usersRepository
+        UsersRepository $usersRepository,
     ) {
         parent::__construct($lazyWidgetManager);
         $this->usersRepository = $usersRepository;

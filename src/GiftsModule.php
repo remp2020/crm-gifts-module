@@ -38,7 +38,7 @@ class GiftsModule extends CrmModule
     public function registerCommands(CommandsContainerInterface $commandsContainer)
     {
         $commandsContainer->registerCommand(
-            $this->getInstance(ActivatePurchasedGiftCouponsCommand::class)
+            $this->getInstance(ActivatePurchasedGiftCouponsCommand::class),
         );
     }
 
@@ -51,23 +51,23 @@ class GiftsModule extends CrmModule
     {
         $emitter->addListener(
             PaymentItemContainerReadyEvent::class,
-            PaymentItemContainerReadyEventHandler::class
+            PaymentItemContainerReadyEventHandler::class,
         );
 
         $emitter->addListener(
             NewPaymentEvent::class,
             CreateGiftCouponNewPaymentEventHandler::class,
-            Emitter::P_HIGH
+            Emitter::P_HIGH,
         );
 
         $emitter->addListener(
             UserRegisteredEvent::class,
-            SendWelcomeEmailHandler::class
+            SendWelcomeEmailHandler::class,
         );
 
         $emitter->addListener(
             SubscriptionStartsEvent::class,
-            SubscriptionsStartsEventHandler::class
+            SubscriptionsStartsEventHandler::class,
         );
     }
 
@@ -82,32 +82,32 @@ class GiftsModule extends CrmModule
         $lazyWidgetManager->registerWidget(
             'admin.payments.listing.action',
             GiftCoupons::class,
-            400
+            400,
         );
 
         $lazyWidgetManager->registerWidget(
             'payment.address',
-            PaymentSuccessGiftSubscriptionAddressWidget::class
+            PaymentSuccessGiftSubscriptionAddressWidget::class,
         );
 
         $lazyWidgetManager->registerWidget(
             'payments.admin.payment_item_listing',
-            GiftPaymentItemsListWidget::class
+            GiftPaymentItemsListWidget::class,
         );
 
         $lazyWidgetManager->registerWidget(
             'subscriptions.admin.user_subscriptions_listing.subscription',
-            DonatedSubscriptionListingWidget::class
+            DonatedSubscriptionListingWidget::class,
         );
 
         $lazyWidgetManager->registerWidget(
             'admin.products.order.right_column',
-            OrderDonatedSubscriptionInfo::class
+            OrderDonatedSubscriptionInfo::class,
         );
 
         $lazyWidgetManager->registerWidget(
             'orders.listing.payment_actions',
-            GiftCoupons::class
+            GiftCoupons::class,
         );
 
         $lazyWidgetManager->registerWidget(
@@ -122,7 +122,7 @@ class GiftsModule extends CrmModule
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.address.can_delete',
             $this->getInstance(CanDeleteAddressDataProvider::class),
-            200
+            200,
         );
 
         $dataProviderManager->registerDataProvider(

@@ -17,7 +17,7 @@ class CanDeleteAddressDataProvider implements CanDeleteAddressDataProviderInterf
 
     public function __construct(
         Translator $translator,
-        PaymentMetaRepository $paymentMetaRepository
+        PaymentMetaRepository $paymentMetaRepository,
     ) {
         $this->translator = $translator;
         $this->paymentMetaRepository = $paymentMetaRepository;
@@ -36,12 +36,12 @@ class CanDeleteAddressDataProvider implements CanDeleteAddressDataProviderInterf
         if ($paymentsMeta) {
             return [
                 'canDelete' => false,
-                'message' => $this->translator->translate('gifts.admin.address.cant_delete')
+                'message' => $this->translator->translate('gifts.admin.address.cant_delete'),
             ];
         }
 
         return [
-            'canDelete' => true
+            'canDelete' => true,
         ];
     }
 }

@@ -38,7 +38,7 @@ class GiftPaymentTest extends BaseTestCase
 
         $this->emitter->addListener(
             PaymentChangeStatusEvent::class,
-            $this->inject(GiftPaymentStatusChangeHandler::class)
+            $this->inject(GiftPaymentStatusChangeHandler::class),
         );
 
         /** @var GiftPaymentStatusChangeHandler $giftPaymentStatusChangeHandler */
@@ -100,8 +100,8 @@ class GiftPaymentTest extends BaseTestCase
             [
                 'gift' => 1,
                 'gift_email' => $giftEmail,
-                'gift_starts_at'=> $giftStartsAt->format(DateTime::RFC3339)
-            ]
+                'gift_starts_at'=> $giftStartsAt->format(DateTime::RFC3339),
+            ],
         );
 
         $this->paymentsRepository->updateStatus($payment, PaymentStatusEnum::Paid->value);

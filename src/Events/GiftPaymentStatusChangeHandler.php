@@ -68,14 +68,14 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
                     } else {
                         Debugger::log(
                             "Coupon attachment [{$attachmentName}] not loaded. Payment ID: [{$payment->id}]",
-                            ILogger::ERROR
+                            ILogger::ERROR,
                         );
                     }
                 } catch (\Exception $e) {
                     Debugger::log(
                         "Coupon attachment [{$attachmentName}] load failed. Payment ID: [{$payment->id}]. " .
                         "Exception: {$e->getCode()} - {$e->getMessage()}",
-                        ILogger::ERROR
+                        ILogger::ERROR,
                     );
                 }
 

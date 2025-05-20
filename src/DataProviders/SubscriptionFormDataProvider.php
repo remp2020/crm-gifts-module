@@ -87,7 +87,7 @@ class SubscriptionFormDataProvider implements SubscriptionFormDataProviderInterf
             $form->getComponent($elementName)
                 ->setOption(
                     'description',
-                    Html::el('span', ['class' => 'help-block'])->setHtml($description)
+                    Html::el('span', ['class' => 'help-block'])->setHtml($description),
                 );
 
             $form->getComponent($elementName)

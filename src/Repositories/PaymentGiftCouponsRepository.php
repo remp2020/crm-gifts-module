@@ -23,7 +23,7 @@ class PaymentGiftCouponsRepository extends Repository
     public function __construct(
         Explorer $database,
         AuditLogRepository $auditLogRepository,
-        Storage $cacheStorage = null
+        Storage $cacheStorage = null,
     ) {
         parent::__construct($database, $cacheStorage);
         $this->auditLogRepository = $auditLogRepository;
@@ -35,7 +35,7 @@ class PaymentGiftCouponsRepository extends Repository
         DateTime $startsAt,
         ?int $productID = null,
         ?int $subscriptionTypeID = null,
-        ?int $addressID = null
+        ?int $addressID = null,
     ) {
         return $this->insert([
             'payment_id' => $paymentID,
@@ -44,7 +44,7 @@ class PaymentGiftCouponsRepository extends Repository
             'email' => $email,
             'starts_at' => $startsAt,
             'status' => self::STATUS_NOT_SENT,
-            'address_id' => $addressID
+            'address_id' => $addressID,
         ]);
     }
 

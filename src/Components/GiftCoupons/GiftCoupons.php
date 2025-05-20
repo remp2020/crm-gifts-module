@@ -38,7 +38,7 @@ class GiftCoupons extends BaseLazyWidget
         PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
         UsersRepository $usersRepository,
         Translator $translator,
-        UserDateHelper $userDateHelper
+        UserDateHelper $userDateHelper,
     ) {
         parent::__construct($lazyWidgetManager);
 
@@ -136,7 +136,7 @@ class GiftCoupons extends BaseLazyWidget
         if (!$paymentGiftCoupon) {
             $msg = $this->translator->translate(
                 'gifts.components.gift_coupons.errors.payment_gift_coupon_not_found',
-                ['paymentGiftCouponId' => $values['id']]
+                ['paymentGiftCouponId' => $values['id']],
             );
             Debugger::log("Form submitted for payment gift coupon ID {$values['id']} we are unable to find.", Debugger::ERROR);
             $form->addError($msg);
@@ -149,7 +149,7 @@ class GiftCoupons extends BaseLazyWidget
             || $paymentGiftCoupon->starts_at < new DateTime()) {
             $msg = $this->translator->translate(
                 'gifts.components.gift_coupons.errors.already_sent',
-                ['paymentGiftCouponId' => $values['id'], 'email' => $paymentGiftCoupon->email]
+                ['paymentGiftCouponId' => $values['id'], 'email' => $paymentGiftCoupon->email],
             );
             $form->addError($msg);
             // TODO: error message duplicated until AJAX submitting is implemented (modal is closed after submit; probably needs bigger refactor)
@@ -162,7 +162,7 @@ class GiftCoupons extends BaseLazyWidget
         if ($startsAt < new DateTime()) {
             $msg = $this->translator->translate(
                 'gifts.components.gift_coupons.errors.starts_at_in_past',
-                ['paymentGiftCouponId' => $values['id'], 'paymentGiftCouponStartsAt' => $this->userDateHelper->process($startsAt)]
+                ['paymentGiftCouponId' => $values['id'], 'paymentGiftCouponStartsAt' => $this->userDateHelper->process($startsAt)],
             );
             $form->addError($msg);
             // TODO: error message duplicated until AJAX submitting is implemented (modal is closed after submit; probably needs bigger refactor)
@@ -177,7 +177,7 @@ class GiftCoupons extends BaseLazyWidget
 
         $this->getPresenter()->flashMessage($this->translator->translate(
             'gifts.components.gift_coupons.success',
-            ['paymentGiftCouponId' => $values['id']]
+            ['paymentGiftCouponId' => $values['id']],
         ));
     }
 }

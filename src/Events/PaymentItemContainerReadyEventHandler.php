@@ -12,7 +12,7 @@ use Nette\Localization\Translator;
 class PaymentItemContainerReadyEventHandler extends AbstractListener
 {
     public function __construct(
-        private Translator $translator
+        private Translator $translator,
     ) {
     }
 

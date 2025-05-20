@@ -90,7 +90,7 @@ class SendNotificationEmailToDonorGenericEvent implements ScenarioGenericEventIn
                 $this->emitter,
                 $donorUser,
                 $emailCode,
-                $templateParams
+                $templateParams,
             );
         }
 

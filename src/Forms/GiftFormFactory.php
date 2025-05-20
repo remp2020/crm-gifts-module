@@ -64,7 +64,7 @@ class GiftFormFactory
         $subscriptionTypeId = $form->addSelect(
             'subscription_type_id',
             'gifts.forms.gift_form.subscription_type.label',
-            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes)
+            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes),
         )
             ->setRequired()
             ->setPrompt('--')
@@ -86,7 +86,7 @@ class GiftFormFactory
         $form->addSelect(
             'address_id',
             'gifts.forms.gift_form.address.label',
-            $this->addressesSelectItemsBuilder->buildSimpleWithTypes($user, AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE)
+            $this->addressesSelectItemsBuilder->buildSimpleWithTypes($user, AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE),
         )
             ->setPrompt('--')
             ->setOption('description', $this->translator->translate(

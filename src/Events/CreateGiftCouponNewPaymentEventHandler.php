@@ -21,7 +21,7 @@ class CreateGiftCouponNewPaymentEventHandler extends AbstractListener
     public function __construct(
         PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
         PaymentMetaRepository $paymentMetaRepository,
-        PaymentsRepository $paymentsRepository
+        PaymentsRepository $paymentsRepository,
     ) {
         $this->paymentGiftCouponsRepository = $paymentGiftCouponsRepository;
         $this->paymentMetaRepository = $paymentMetaRepository;
@@ -50,7 +50,7 @@ class CreateGiftCouponNewPaymentEventHandler extends AbstractListener
                 $giftData['gift_email'],
                 DateTime::createFromFormat(DateTime::RFC3339, $giftData['gift_starts_at']),
                 null,
-                $subscriptionTypeID
+                $subscriptionTypeID,
             );
         }
     }

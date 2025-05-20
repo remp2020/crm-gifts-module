@@ -122,7 +122,7 @@ class GiftSubscriptionAddressFormFactory
                 null,
                 null,
                 $values->phone_number,
-                AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE
+                AddressTypesSeeder::GIFT_SUBSCRIPTION_ADDRESS_TYPE,
             );
 
             if ($changeRequest) {

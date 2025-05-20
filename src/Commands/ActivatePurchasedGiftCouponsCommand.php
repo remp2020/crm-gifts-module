@@ -144,7 +144,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             $startTime,
             null,
             null,
-            $address
+            $address,
         );
 
         if (!$subscription) {
@@ -155,7 +155,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         $this->paymentGiftCouponsRepository->update($coupon, [
             'status' => PaymentGiftCouponsRepository::STATUS_SENT,
             'sent_at' => new DateTime(),
-            'subscription_id' => $subscription->id
+            'subscription_id' => $subscription->id,
         ]);
 
         // update status of order to delivered (if this gift was purchased in shop)
