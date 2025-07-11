@@ -48,7 +48,7 @@ class GiftCoupons extends BaseLazyWidget
         $this->userDateHelper = $userDateHelper;
     }
 
-    public function header($id = '')
+    public function header()
     {
         return 'coupon modal';
     }
