@@ -59,7 +59,7 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         $this->extender = $this->extensionMethodFactory->getExtension($extendMethod);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $start = microtime(true);
 
