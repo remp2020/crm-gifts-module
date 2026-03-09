@@ -8,7 +8,6 @@ use Crm\GiftsModule\GiftsModule;
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\PaymentsModule\Repositories\PaymentMetaRepository;
-use Crm\ProductsModule\Repositories\OrdersRepository;
 use Crm\ProductsModule\Repositories\ProductPropertiesRepository;
 use Crm\SubscriptionsModule\Models\Extension\ExtensionInterface;
 use Crm\SubscriptionsModule\Models\Extension\ExtensionMethodFactory;
@@ -41,7 +40,6 @@ class ActivatePurchasedGiftCouponsCommand extends Command
         private readonly ProductPropertiesRepository $productPropertiesRepository,
         private readonly PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
         private readonly PaymentMetaRepository $paymentMetaRepository,
-        private readonly OrdersRepository $ordersRepository,
         private readonly ExtensionMethodFactory $extensionMethodFactory,
         private readonly Emitter $emitter,
     ) {
@@ -158,17 +156,9 @@ class ActivatePurchasedGiftCouponsCommand extends Command
             'subscription_id' => $subscription->id,
         ]);
 
-        // update status of order to delivered (if this gift was purchased in shop)
-        $order = $this->ordersRepository->findByPayment($coupon->payment);
-        if ($order) {
-            $this->ordersRepository->update($order, ['status' => OrdersRepository::STATUS_DELIVERED]);
-        }
-
         $this->emitter->emit(new GiftCouponActivatedEvent($coupon, $subscription));
 
         $output->writeln("Subscription <info>{$subscriptionType->name}</info> - created\n");
-
-        return;
     }
 
     private function createUserIfNotExists($email)
