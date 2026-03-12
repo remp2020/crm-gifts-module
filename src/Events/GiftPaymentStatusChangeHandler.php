@@ -9,11 +9,13 @@ use Crm\InvoicesModule\Models\Generator\InvoiceGenerator;
 use Crm\InvoicesModule\Models\Generator\PaymentNotInvoiceableException;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
 use Crm\PaymentsModule\Models\Payment\PaymentStatusEnum;
+use Crm\SubscriptionsModule\Models\Subscription\StopSubscriptionHandler;
 use Crm\UsersModule\Events\NotificationEvent;
 use League\Event\AbstractListener;
 use League\Event\Emitter;
 use League\Event\EventInterface;
 use Nette\Database\Table\ActiveRow;
+use Nette\Utils\DateTime;
 use Tracy\Debugger;
 use Tracy\ILogger;
 
@@ -26,6 +28,7 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
         private readonly Emitter $emitter,
         private readonly PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
         private readonly InvoiceGenerator $invoiceGenerator,
+        private readonly StopSubscriptionHandler $stopSubscriptionHandler,
     ) {
     }
 
@@ -45,6 +48,11 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
 
         /** @var ActiveRow $payment */
         $payment = $event->getPayment();
+
+        if ($payment->status === PaymentStatusEnum::Refund->value) {
+            $this->handleRefund($payment);
+            return;
+        }
 
         if ($payment->status !== PaymentStatusEnum::Paid->value) {
             return;
@@ -107,6 +115,22 @@ class GiftPaymentStatusChangeHandler extends AbstractListener
                 ],
                 attachments: $attachments,
             ));
+        }
+    }
+
+    private function handleRefund(ActiveRow $payment): void
+    {
+        $paymentGiftCoupon = $this->paymentGiftCouponsRepository->findByPayment($payment)->fetch();
+        if (!$paymentGiftCoupon) {
+            return;
+        }
+
+        // If the gift subscription was already activated, stop it
+        if ($paymentGiftCoupon->subscription_id) {
+            $subscription = $paymentGiftCoupon->subscription;
+            if ($subscription && $subscription->end_time > new DateTime()) {
+                $this->stopSubscriptionHandler->stopSubscription($subscription);
+            }
         }
     }
 }
