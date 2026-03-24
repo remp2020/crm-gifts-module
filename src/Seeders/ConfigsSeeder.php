@@ -44,7 +44,6 @@ class ConfigsSeeder implements ISeeder
                 ->setDisplayName('gifts.config.gift_subscription_coupon_attachment.name')
                 ->setDescription('gifts.config.gift_subscription_coupon_attachment.description')
                 ->setType(ApplicationConfig::TYPE_STRING)
-                ->setAutoload(true)
                 ->setConfigCategory($category)
                 ->setSorting(500)
                 ->save();
