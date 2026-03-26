@@ -1,7 +1,5 @@
 # CRM GiftsModule
 
-[![Translation status @ Weblate](https://hosted.weblate.org/widgets/remp-crm/-/gifts-module/svg-badge.svg)](https://hosted.weblate.org/projects/remp-crm/gifts-module/)
-
 This module provides gift option to [SalesFunnelModule].
 
 
