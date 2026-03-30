@@ -34,9 +34,6 @@ class CreateGiftCouponNewPaymentEventHandler extends AbstractListener
             throw new \Exception('unexpected type of event, NewPaymentEvent expected: ' . get_class($event));
         }
         $payment = $event->getPayment();
-        if (!$payment) {
-            throw new \Exception('NewPaymentEvent without payment');
-        }
 
         // create gift coupon entry
         $giftData = $this->paymentMetaRepository->values($payment, 'gift', 'gift_email', 'gift_starts_at')->fetchPairs('key', 'value');
