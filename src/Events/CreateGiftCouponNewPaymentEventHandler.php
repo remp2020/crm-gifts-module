@@ -6,32 +6,24 @@ use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\Events\NewPaymentEvent;
 use Crm\PaymentsModule\Repositories\PaymentMetaRepository;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
+use Exception;
 use League\Event\AbstractListener;
 use League\Event\EventInterface;
 use Nette\Utils\DateTime;
 
 class CreateGiftCouponNewPaymentEventHandler extends AbstractListener
 {
-    private $paymentGiftCouponsRepository;
-
-    private $paymentMetaRepository;
-
-    private $paymentsRepository;
-
     public function __construct(
-        PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
-        PaymentMetaRepository $paymentMetaRepository,
-        PaymentsRepository $paymentsRepository,
+        private readonly PaymentGiftCouponsRepository $paymentGiftCouponsRepository,
+        private readonly PaymentMetaRepository $paymentMetaRepository,
+        private readonly PaymentsRepository $paymentsRepository,
     ) {
-        $this->paymentGiftCouponsRepository = $paymentGiftCouponsRepository;
-        $this->paymentMetaRepository = $paymentMetaRepository;
-        $this->paymentsRepository = $paymentsRepository;
     }
 
-    public function handle(EventInterface $event)
+    public function handle(EventInterface $event): void
     {
         if (!$event instanceof NewPaymentEvent) {
-            throw new \Exception('unexpected type of event, NewPaymentEvent expected: ' . get_class($event));
+            throw new Exception('unexpected type of event, NewPaymentEvent expected: ' . get_class($event));
         }
         $payment = $event->getPayment();
 
@@ -45,7 +37,7 @@ class CreateGiftCouponNewPaymentEventHandler extends AbstractListener
             $this->paymentGiftCouponsRepository->add(
                 $payment->id,
                 $giftData['gift_email'],
-                DateTime::createFromFormat(DateTime::RFC3339, $giftData['gift_starts_at']),
+                DateTime::from($giftData['gift_starts_at']),
                 null,
                 $subscriptionTypeID,
             );
