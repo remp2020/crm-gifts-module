@@ -88,11 +88,16 @@ data_provider:
 forms:
     gift_form:
         errors:
-            unable_to_create_payment_one_stop_shop: "Platbu nie je možné vykonať z dôvodu konfliktu zvolených krajín (fakturačná krajina, krajina doručenia)."
+            unable_to_create_payment_one_stop_shop: "Platbu není možné provést z důvodu konfliktu zvolených zemí (fakturační země, země doručení)."
         payment_gateway:
             label: Platební brána
         subscription_type:
             label: Typ předplatného
+        custom_amount:
+            label: Vlastní částka
+            description: "Celková částka platby, která se proporcionálně rozpočítá mezi všechny položky platby (včetně DPH). Pokud pole zůstane prázdné, použije se systémová cena typu předplatného (a jeho položek)."
+            invalid: Zadejte kladnou částku
+            invalid_subscription_type: Vlastní částku není možné použít pro bezplatný typ předplatného
         gift_email:
             label: E-mail obdarovaného
             description: Na tento e-mail aktivujeme předplatné po zaplacení platby

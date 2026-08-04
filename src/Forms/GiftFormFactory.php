@@ -42,7 +42,7 @@ class GiftFormFactory
         private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder,
         private readonly Translator $translator,
         private readonly UsersRepository $usersRepository,
-        private User $user,
+        private readonly User $user,
     ) {
     }
 
@@ -54,7 +54,9 @@ class GiftFormFactory
         $form->setTranslator($this->translator);
         $form->addProtection();
 
-        $paymentGateways = $this->paymentGatewaysRepository->all()->fetchPairs('id', 'name');
+        $paymentGateways = $this->paymentGatewaysRepository->all()
+            ->where(['is_recurrent' => false])
+            ->fetchPairs('id', 'name');
         $form->addSelect('payment_gateway_id', 'gifts.forms.gift_form.payment_gateway.label', $paymentGateways)
             ->setRequired()
             ->setPrompt('--')
@@ -69,6 +71,13 @@ class GiftFormFactory
             ->setRequired()
             ->setPrompt('--')
             ->getControlPrototype()->addAttributes(['class' => 'select2']);
+
+        $form->addText('custom_amount', 'gifts.forms.gift_form.custom_amount.label')
+            ->setNullable()
+            ->setOption('description', 'gifts.forms.gift_form.custom_amount.description')
+            ->addCondition(Form::Filled)
+                ->addRule(Form::Float, 'gifts.forms.gift_form.custom_amount.invalid')
+                ->addRule(Form::Min, 'gifts.forms.gift_form.custom_amount.invalid', 0.01);
 
         $form->addText('gift_email', 'gifts.forms.gift_form.gift_email.label')
             ->setRequired()
@@ -139,6 +148,16 @@ class GiftFormFactory
         $paymentItemContainer = (new PaymentItemContainer())
             ->addItems(SubscriptionTypePaymentItem::fromSubscriptionType($subscriptionType));
 
+        if ($values['custom_amount'] !== null && $paymentItemContainer->totalPrice() <= 0) {
+            $form['custom_amount']->addError('gifts.forms.gift_form.custom_amount.invalid_subscription_type');
+
+            return;
+        }
+
+        if ($values['custom_amount'] !== null) {
+            $this->applyCustomAmount($paymentItemContainer, round($values['custom_amount'], 2));
+        }
+
         // let GiftsModule\..\PaymentItemContainerReadyEventHandler update payment container as needed
         $this->emitter->emit(new PaymentItemContainerReadyEvent(
             $paymentItemContainer,
@@ -146,7 +165,6 @@ class GiftFormFactory
             ['payment_metadata' => $paymentMetaData],
         ));
 
-        $resolvedCountry = null;
         try {
             $resolvedCountry = $this->oneStopShop->resolveCountry(
                 user: $donorUser,
@@ -154,7 +172,7 @@ class GiftFormFactory
                 paymentItemContainer: $paymentItemContainer,
             );
         } catch (OneStopShopCountryConflictException $e) {
-            $form->addError('gifts.forms.gift_form.unable_to_create_payment_one_stop_shop');
+            $form->addError('gifts.forms.gift_form.errors.unable_to_create_payment_one_stop_shop');
             return;
         }
 
@@ -163,13 +181,28 @@ class GiftFormFactory
             paymentGateway: $paymentGateway,
             user: $donorUser,
             paymentItemContainer: $paymentItemContainer,
+            note: $values['note'],
             address: $address,
             metaData: $paymentMetaData,
             paymentCountry: $resolvedCountry?->country,
             paymentCountryResolutionReason: $resolvedCountry?->getReasonValue(),
-            note: $values['note'],
         );
 
         $this->onSave->__invoke($payment);
+    }
+
+    private function applyCustomAmount(PaymentItemContainer $paymentItemContainer, float $customAmount): void
+    {
+        $items = $paymentItemContainer->items();
+        $defaultTotal = $paymentItemContainer->totalPrice();
+
+        // Round each item's share down to whole cents; rounding up could make items sum to more than the custom amount.
+        foreach ($items as $item) {
+            $item->forcePrice(floor($customAmount * $item->unitPrice() / $defaultTotal * 100) / 100);
+        }
+
+        // Add the leftover cents to the first item so items sum exactly to the custom amount.
+        $remainder = $customAmount - $paymentItemContainer->totalPrice();
+        $items[0]->forcePrice(round($items[0]->unitPrice() + $remainder, 2));
     }
 }

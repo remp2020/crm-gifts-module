@@ -93,6 +93,11 @@ forms:
             label: Payment gateway
         subscription_type:
             label: Subscription type
+        custom_amount:
+            label: Custom amount
+            description: "Total price of the payment, spread proportionally across all payment items (VAT included). If left empty, the system price of the subscription type (and its items) is used."
+            invalid: Enter a positive amount
+            invalid_subscription_type: Custom amount cannot be applied to a free subscription type
         gift_email:
             label: E-mail of giftee
             description: We will activate the subscription to this email after payment is made.

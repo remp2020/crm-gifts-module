@@ -93,6 +93,11 @@ forms:
             label: Platobná brána
         subscription_type:
             label: Typ predplatného
+        custom_amount:
+            label: Vlastná suma
+            description: "Celková suma platby, ktorá sa proporcionálne rozpočíta medzi všetky položky platby (vrátane DPH). Ak pole ostane prázdne, použije sa systémová cena typu predplatného (a jeho položiek)."
+            invalid: Zadajte kladnú sumu
+            invalid_subscription_type: Vlastnú sumu nie je možné použiť pre bezplatný typ predplatného
         gift_email:
             label: E-mail obdarovaného
             description: Na tento e-mail aktivujeme predplatné po zaplatení platby
