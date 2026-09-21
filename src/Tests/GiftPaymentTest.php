@@ -3,6 +3,7 @@
 namespace Crm\GiftsModule\Tests;
 
 use Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler;
+use Crm\GiftsModule\Forms\GiftSubscriptionAddressFormFactory;
 use Crm\GiftsModule\GiftsModule;
 use Crm\GiftsModule\Repositories\PaymentGiftCouponsRepository;
 use Crm\PaymentsModule\Events\PaymentChangeStatusEvent;
@@ -10,6 +11,8 @@ use Crm\PaymentsModule\Models\Payment\PaymentStatusEnum;
 use Crm\PaymentsModule\Models\PaymentItem\PaymentItemContainer;
 use Crm\PaymentsModule\Repositories\PaymentGatewaysRepository;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
+use Crm\PaymentsModule\Seeders\TestPaymentGatewaysSeeder;
+use Crm\PaymentsModule\Tests\Gateways\TestSingleGateway;
 use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Models\Auth\UserManager;
@@ -31,13 +34,21 @@ class GiftPaymentTest extends BaseTestCase
         ]);
     }
 
+    protected function requiredSeeders(): array
+    {
+        return [
+            TestPaymentGatewaysSeeder::class,
+            ...parent::requiredSeeders(),
+        ];
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->paymentsRepository = $this->getRepository(PaymentsRepository::class);
         $pgr = $this->getRepository(PaymentGatewaysRepository::class);
-        $this->paymentGateway = $pgr->add('test', 'test', 10, true, true);
+        $this->paymentGateway = $pgr->findByCode(TestSingleGateway::GATEWAY_CODE);
 
         $this->userManager = $this->inject(UserManager::class);
         $this->subscriptionTypeBuilder = $this->inject(SubscriptionTypeBuilder::class);
@@ -167,6 +178,43 @@ class GiftPaymentTest extends BaseTestCase
         $giftCoupon = $paymentGiftCouponsRepository->findByPayment($payment)->fetch();
         $this->assertNotNull($giftCoupon);
         $this->assertNull($giftCoupon->subscription_id);
+    }
+
+    public function testCopyPaymentCopiesGiftCoupon(): void
+    {
+        $buyer = $this->userManager->addNewUser('buyer3@example.com', false, 'unknown', null, false);
+
+        $subscriptionType = $this->subscriptionTypeBuilder
+            ->createNew()
+            ->setName('test_subscription')
+            ->setUserLabel('')
+            ->setActive(true)
+            ->setPrice(1)
+            ->setLength(365)
+            ->save();
+
+        $giftStartsAt = new DateTime('2040-01-01 00:00:00');
+        $payment = $this->addGiftPayment($buyer, $subscriptionType, 'typo-recipient@example.com', $giftStartsAt);
+
+        /** @var PaymentGiftCouponsRepository $paymentGiftCouponsRepository */
+        $paymentGiftCouponsRepository = $this->getRepository(PaymentGiftCouponsRepository::class);
+        $coupon = $paymentGiftCouponsRepository->findByPayment($payment)->fetch();
+        $paymentGiftCouponsRepository->update($coupon, ['email' => 'copy-recipient@example.com']);
+        $this->paymentsRepository->addMeta($payment, [GiftSubscriptionAddressFormFactory::PAYMENT_META_KEY => '123']);
+
+        $copiedPayment = $this->paymentsRepository->copyPayment($payment);
+
+        $copiedCoupons = $paymentGiftCouponsRepository->findByPayment($copiedPayment)->fetchAll();
+        $this->assertCount(1, $copiedCoupons);
+        $copiedCoupon = reset($copiedCoupons);
+        $this->assertEquals('copy-recipient@example.com', $copiedCoupon->email);
+        $this->assertEquals($giftStartsAt, $copiedCoupon->starts_at);
+        $this->assertEquals($subscriptionType->id, $copiedCoupon->subscription_type_id);
+        $this->assertNull($copiedPayment->subscription_type_id, 'Buyer must not get a subscription from the copy');
+        $this->assertEquals(
+            ['gift' => '1', GiftSubscriptionAddressFormFactory::PAYMENT_META_KEY => '123'],
+            $copiedPayment->related('payment_meta')->fetchPairs('key', 'value'),
+        );
     }
 
     private function addGiftPayment($user, $subscriptionType, $giftEmail, DateTime $giftStartsAt)

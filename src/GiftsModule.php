@@ -19,12 +19,14 @@ use Crm\GiftsModule\DataProviders\CanDeleteAddressDataProvider;
 use Crm\GiftsModule\DataProviders\SubscriptionFormDataProvider;
 use Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler;
 use Crm\GiftsModule\Events\GiftCouponActivatedEvent;
+use Crm\GiftsModule\Events\PaymentCopiedEventHandler;
 use Crm\GiftsModule\Events\PaymentItemContainerReadyEventHandler;
 use Crm\GiftsModule\Events\SendWelcomeEmailHandler;
 use Crm\GiftsModule\Events\SubscriptionsStartsEventHandler;
 use Crm\GiftsModule\Seeders\AddressTypesSeeder;
 use Crm\GiftsModule\Seeders\ConfigsSeeder;
 use Crm\PaymentsModule\Events\NewPaymentEvent;
+use Crm\PaymentsModule\Events\PaymentCopiedEvent;
 use Crm\SalesFunnelModule\Events\PaymentItemContainerReadyEvent;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionFormDataProviderInterface;
 use Crm\SubscriptionsModule\Events\SubscriptionStartsEvent;
@@ -58,6 +60,11 @@ class GiftsModule extends CrmModule
             NewPaymentEvent::class,
             CreateGiftCouponNewPaymentEventHandler::class,
             Emitter::P_HIGH,
+        );
+
+        $emitter->addListener(
+            PaymentCopiedEvent::class,
+            PaymentCopiedEventHandler::class,
         );
 
         $emitter->addListener(

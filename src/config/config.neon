@@ -21,6 +21,7 @@ services:
 
 	- Crm\GiftsModule\Events\CreateGiftCouponNewPaymentEventHandler
 	- Crm\GiftsModule\Events\GiftPaymentStatusChangeHandler
+	- Crm\GiftsModule\Events\PaymentCopiedEventHandler
 	- Crm\GiftsModule\Events\PaymentItemContainerReadyEventHandler
 	- Crm\GiftsModule\Events\SendWelcomeEmailHandler
 	- Crm\GiftsModule\Events\SubscriptionsStartsEventHandler
